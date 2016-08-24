@@ -1,0 +1,23 @@
+sudo: false
+language: go
+go:
+- tip
+addons:
+  apt:
+    packages:
+      - rpm
+      - pandoc
+before_install:
+- gem install fpm
+- gem install package_cloud
+- go get github.com/axw/gocov/gocov
+- go get github.com/mattn/goveralls
+- if ! go get github.com/golang/tools/cmd/cover; then go get golang.org/x/tools/cmd/cover; fi
+script:
+- $HOME/gopath/bin/goveralls -service=travis-ci
+deploy:
+  provider: script
+  script: make deploy-packages
+  skip_cleanup: true
+  on:
+    tags: true
