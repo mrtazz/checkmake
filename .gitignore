@@ -1,0 +1,8 @@
+usr
+.d
+*.1
+checkmake*
+!cmd/checkmake*
+cover.html
+cover.out
+profile.out
