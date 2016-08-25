@@ -29,9 +29,10 @@ type RuleList []Rule
 
 // Variable represents a Make variable
 type Variable struct {
-	Name           string
-	SimplyExpanded bool
-	Assignment     string
+	Name            string
+	SimplyExpanded  bool
+	Assignment      string
+	SpecialVariable bool
 }
 
 // VariableList represents a list of variables
@@ -42,6 +43,7 @@ var (
 	reFindRuleBody         = regexp.MustCompile("^\t+(.*)")
 	reFindSimpleVariable   = regexp.MustCompile("^([a-zA-Z]+) ?:=(.*)")
 	reFindExpandedVariable = regexp.MustCompile("^([a-zA-Z]+) ?=(.*)")
+	reFindSpecialVariable  = regexp.MustCompile("^\\.([a-zA-Z_]+):(.*)")
 )
 
 // Parse is the main function to parse a Makefile from a file path string to a
@@ -61,7 +63,15 @@ func Parse(filepath string) (ret Makefile, err error) {
 		case strings.HasPrefix(scanner.Text(), "#"):
 			// parse comments here, ignoring them for now
 			scanner.Scan()
-			break
+		case strings.HasPrefix(scanner.Text(), "."):
+			if matches := reFindSpecialVariable.FindStringSubmatch(scanner.Text()); matches != nil {
+				specialVar := Variable{
+					Name:            strings.TrimSpace(matches[1]),
+					Assignment:      strings.TrimSpace(matches[2]),
+					SpecialVariable: true}
+				ret.Variables = append(ret.Variables, specialVar)
+			}
+			scanner.Scan()
 		default:
 			// parse target or variable here, the function advances the scanner
 			// itself to be able to detect rule bodies

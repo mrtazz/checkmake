@@ -1,6 +1,6 @@
 # this is a comment
 
-exanded = "$(simple)"
+expanded = "$(simple)"
 simple := "foo"
 
 clean:
@@ -17,4 +17,4 @@ all: foo
 
 .PHONY: all clean
 
-.DEFAULT: all
+.DEFAULT_GOAL: all
