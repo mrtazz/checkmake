@@ -14,3 +14,7 @@ not do what you want it to.
 ```bash
 checkmake Makefile
 ```
+
+## Inspiration
+This is totally inspired by an idea by [Dan
+Buch](https://twitter.com/meatballhat/status/768112351924985856).
