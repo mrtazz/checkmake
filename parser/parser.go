@@ -7,7 +7,6 @@ package parser
 
 import (
 	"errors"
-	"log"
 	"regexp"
 	"strings"
 )
@@ -40,6 +39,7 @@ type VariableList []Variable
 
 var (
 	reFindRule             = regexp.MustCompile("^([a-zA-Z]+):(.*)")
+	reFindRuleBody         = regexp.MustCompile("^\t+(.*)")
 	reFindSimpleVariable   = regexp.MustCompile("^([a-zA-Z]+) ?:=(.*)")
 	reFindExpandedVariable = regexp.MustCompile("^([a-zA-Z]+) ?=(.*)")
 )
@@ -56,13 +56,15 @@ func Parse(filepath string) (ret Makefile, err error) {
 		return ret, err
 	}
 
-	for scanner.Scan() {
+	for {
 		switch {
 		case strings.HasPrefix(scanner.Text(), "#"):
 			// parse comments here, ignoring them for now
+			scanner.Scan()
 			break
 		default:
-			// parse target or variable here
+			// parse target or variable here, the function advances the scanner
+			// itself to be able to detect rule bodies
 			ruleOrVariable, parseError := parseRuleOrVariable(scanner)
 			if parseError != nil {
 				return ret, parseError
@@ -82,9 +84,11 @@ func Parse(filepath string) (ret Makefile, err error) {
 				ret.Variables = append(ret.Variables, variable)
 			}
 		}
-	}
 
-	return ret, err
+		if scanner.Finished == true {
+			return
+		}
+	}
 }
 
 // parseRuleOrVariable gets the parsing scanner in a state where it resides on
@@ -99,22 +103,48 @@ func parseRuleOrVariable(scanner *MakefileScanner) (ret interface{}, err error) 
 	line := scanner.Text()
 
 	if matches := reFindRule.FindStringSubmatch(line); matches != nil {
-		log.Printf("found rule in '%s' with matches %v\n", line, matches)
+		// we found a rule so we need to advance the scanner to figure out if
+		// there is a body
+		scanner.Scan()
+		bodyMatches := reFindRuleBody.FindStringSubmatch(scanner.Text())
+		ruleBody := make([]string, 0, 20)
+		for bodyMatches != nil {
+
+			ruleBody = append(ruleBody, strings.TrimSpace(bodyMatches[1]))
+
+			// done parsing the rule body line, advance the scanner and potentially
+			// go into the next loop iteration
+			scanner.Scan()
+			bodyMatches = reFindRuleBody.FindStringSubmatch(scanner.Text())
+		}
+		// trim whitespace from all dependencies
+		deps := strings.Split(matches[2], " ")
+		filteredDeps := make([]string, 0, cap(deps))
+
+		for idx := range deps {
+			item := strings.TrimSpace(deps[idx])
+			if item != "" {
+				filteredDeps = append(filteredDeps, item)
+			}
+		}
 		ret = Rule{
-			Target:       matches[1],
-			Dependencies: strings.Split(matches[2], " ")}
+			Target:       strings.TrimSpace(matches[1]),
+			Dependencies: filteredDeps,
+			Body:         ruleBody}
 	} else if matches := reFindSimpleVariable.FindStringSubmatch(line); matches != nil {
 		ret = Variable{
-			Name:           matches[1],
-			Assignment:     matches[2],
+			Name:           strings.TrimSpace(matches[1]),
+			Assignment:     strings.TrimSpace(matches[2]),
 			SimplyExpanded: true}
+		scanner.Scan()
 	} else if matches := reFindExpandedVariable.FindStringSubmatch(line); matches != nil {
 		ret = Variable{
-			Name:           matches[1],
-			Assignment:     matches[2],
+			Name:           strings.TrimSpace(matches[1]),
+			Assignment:     strings.TrimSpace(matches[2]),
 			SimplyExpanded: false}
+		scanner.Scan()
 	} else {
-		log.Printf("didn't match '%s' with anything\n", line)
+		scanner.Scan()
 	}
 
 	return

@@ -25,11 +25,11 @@ func TestParseSimpleMakefile(t *testing.T) {
 	Expect(t, ret.Rules[0].Body, []string{"rm bar", "rm foo"})
 
 	Expect(t, ret.Rules[1].Target, "foo")
-	Expect(t, ret.Rules[1].Body, "touch foo")
+	Expect(t, ret.Rules[1].Body, []string{"touch foo"})
 	Expect(t, ret.Rules[1].Dependencies, []string{"bar"})
 
 	Expect(t, ret.Rules[2].Target, "bar")
-	Expect(t, ret.Rules[2].Body, "touch bar")
+	Expect(t, ret.Rules[2].Body, []string{"touch bar"})
 
 	Expect(t, ret.Rules[3].Target, "all")
 	Expect(t, ret.Rules[3].Dependencies, []string{"foo"})

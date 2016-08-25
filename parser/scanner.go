@@ -1,5 +1,7 @@
 // Package parser implements all the parser functionality for Makefiles
-// this specific file holds the functionality for the scanner
+// this specific file holds the functionality for the scanner. The
+// implementation is a thin wrapper around bufio.Scanner with some extra
+// niceties to make parsing Makefiles easier.
 package parser
 
 import (
@@ -14,12 +16,17 @@ type MakefileScanner struct {
 	Scanner    *bufio.Scanner
 	LineNumber int
 	FileHandle *os.File
+	Finished   bool
 }
 
 // Scan is a thin wrapper around the bufio.Scanner Scan() function
 func (s *MakefileScanner) Scan() bool {
 	s.LineNumber++
-	return s.Scanner.Scan()
+	scanResult := s.Scanner.Scan()
+	if scanResult == false && s.Scanner.Err() == nil {
+		s.Finished = true
+	}
+	return scanResult
 }
 
 // Close closes all open handles the scanner has
