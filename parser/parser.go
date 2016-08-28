@@ -22,6 +22,7 @@ type Rule struct {
 	Target       string
 	Dependencies []string
 	Body         []string
+	LineNumber   int
 }
 
 // RuleList represents a list of rules
@@ -33,6 +34,7 @@ type Variable struct {
 	SimplyExpanded  bool
 	Assignment      string
 	SpecialVariable bool
+	LineNumber      int
 }
 
 // VariableList represents a list of variables
@@ -68,7 +70,8 @@ func Parse(filepath string) (ret Makefile, err error) {
 				specialVar := Variable{
 					Name:            strings.TrimSpace(matches[1]),
 					Assignment:      strings.TrimSpace(matches[2]),
-					SpecialVariable: true}
+					SpecialVariable: true,
+					LineNumber:      scanner.LineNumber}
 				ret.Variables = append(ret.Variables, specialVar)
 			}
 			scanner.Scan()
@@ -140,18 +143,21 @@ func parseRuleOrVariable(scanner *MakefileScanner) (ret interface{}, err error) 
 		ret = Rule{
 			Target:       strings.TrimSpace(matches[1]),
 			Dependencies: filteredDeps,
-			Body:         ruleBody}
+			Body:         ruleBody,
+			LineNumber:   scanner.LineNumber}
 	} else if matches := reFindSimpleVariable.FindStringSubmatch(line); matches != nil {
 		ret = Variable{
 			Name:           strings.TrimSpace(matches[1]),
 			Assignment:     strings.TrimSpace(matches[2]),
-			SimplyExpanded: true}
+			SimplyExpanded: true,
+			LineNumber:     scanner.LineNumber}
 		scanner.Scan()
 	} else if matches := reFindExpandedVariable.FindStringSubmatch(line); matches != nil {
 		ret = Variable{
 			Name:           strings.TrimSpace(matches[1]),
 			Assignment:     strings.TrimSpace(matches[2]),
-			SimplyExpanded: false}
+			SimplyExpanded: false,
+			LineNumber:     scanner.LineNumber}
 		scanner.Scan()
 	} else {
 		scanner.Scan()
