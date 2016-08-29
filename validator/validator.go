@@ -7,6 +7,9 @@ import (
 	"github.com/mrtazz/checkmake/logger"
 	"github.com/mrtazz/checkmake/parser"
 	"github.com/mrtazz/checkmake/rules"
+	// rules register themselves via their package's init function, so we can
+	// just blank import it
+	_ "github.com/mrtazz/checkmake/rules/rule1"
 )
 
 // Config is a struct to configure the validator
