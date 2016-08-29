@@ -37,6 +37,10 @@ var (
 	ruleRegistry RuleRegistry
 )
 
+func init() {
+	ruleRegistry = make(RuleRegistry)
+}
+
 // RegisterRule let's you register a rule for inclusion in the validator
 func RegisterRule(r Rule) {
 	ruleRegistry[r.Name] = r
