@@ -3,6 +3,8 @@
 package validator
 
 import (
+	"fmt"
+	"github.com/mrtazz/checkmake/logger"
 	"github.com/mrtazz/checkmake/parser"
 	"github.com/mrtazz/checkmake/rules"
 )
@@ -18,6 +20,7 @@ func Validate(makefile parser.Makefile, config Config) (ret rules.RuleViolationL
 	rules := rules.GetRegisteredRules()
 
 	for name, rule := range rules {
+		logger.Debug(fmt.Sprintf("Running rule '%s'...", name))
 		ret = append(ret, rule.Rule(makefile, config.RuleConfigs[name])...)
 	}
 
