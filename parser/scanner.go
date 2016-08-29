@@ -49,6 +49,7 @@ func NewMakefileScanner(filepath string) (*MakefileScanner, error) {
 	}
 	ret.Scanner = bufio.NewScanner(ret.FileHandle)
 	ret.Scanner.Split(bufio.ScanLines)
+	ret.LineNumber = 1
 
 	return ret, nil
 }
