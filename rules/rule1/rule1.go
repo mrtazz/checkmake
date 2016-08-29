@@ -33,8 +33,9 @@ func ruleset(makefile parser.Makefile, config rules.RuleConfig) rules.RuleViolat
 		_, ok := ruleIndex[rule.Target]
 		if len(rule.Body) == 0 && ok == false {
 			ret = append(ret, rules.RuleViolation{
-				Rule:      "rule1",
-				Violation: fmt.Sprintf("Target '%s' should be marked PHONY.", rule.Target),
+				Rule:       "rule1",
+				Violation:  fmt.Sprintf("Target '%s' should be marked PHONY.", rule.Target),
+				LineNumber: rule.LineNumber,
 			})
 		}
 	}
