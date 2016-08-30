@@ -10,7 +10,7 @@ import (
 
 func TestDefaultFormatter(t *testing.T) {
 	out := new(bytes.Buffer)
-	exp := "                                                        \n  RULE             DESCRIPTION             LINE NUMBER  \n                                                        \n  rule1   Target 'all' should be marked    18           \n          PHONY.                                        \n                                                        \n"
+	exp := "                                                                \n      RULE                 DESCRIPTION             LINE NUMBER  \n                                                                \n  phonydeclared   Target '\"all\"' should be         18           \n                  declared PHONY.                               \n                                                                \n"
 	formatter := DefaultFormatter{out: out}
 
 	makefile, _ := parser.Parse("../fixtures/missing_phony.make")
