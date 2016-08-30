@@ -15,6 +15,9 @@ bar:
 
 all: foo
 
+test:
+	@echo lolnah
+
 .PHONY: clean
 
 .DEFAULT_GOAL: all

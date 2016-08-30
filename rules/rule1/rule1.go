@@ -4,9 +4,10 @@ package rule1
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/mrtazz/checkmake/parser"
 	"github.com/mrtazz/checkmake/rules"
-	"strings"
 )
 
 func init() {
@@ -46,7 +47,7 @@ func (r *Rule1) Run(makefile parser.Makefile, config rules.RuleConfig) rules.Rul
 		if len(rule.Body) == 0 && ok == false {
 			ret = append(ret, rules.RuleViolation{
 				Rule:       "rule1",
-				Violation:  fmt.Sprintf("Target '%s' should be marked PHONY.", rule.Target),
+				Violation:  fmt.Sprintf("Target %q should be marked PHONY.", rule.Target),
 				LineNumber: rule.LineNumber,
 			})
 		}
