@@ -17,7 +17,9 @@ func TestAllTargetsArePhony(t *testing.T) {
 			Target: "all"}, parser.Rule{Target: "clean"},
 		}}
 
-	ret := ruleset(makefile, rules.RuleConfig{})
+	rule := Rule1{}
+
+	ret := rule.Run(makefile, rules.RuleConfig{})
 
 	th.Expect(t, len(ret), 0)
 
@@ -33,7 +35,9 @@ func TestMissingOnePhonyTarget(t *testing.T) {
 			Target: "all"}, parser.Rule{Target: "clean"},
 		}}
 
-	ret := ruleset(makefile, rules.RuleConfig{})
+	rule := Rule1{}
+
+	ret := rule.Run(makefile, rules.RuleConfig{})
 
 	th.Expect(t, len(ret), 1)
 
