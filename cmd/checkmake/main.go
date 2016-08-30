@@ -3,13 +3,12 @@ package main
 import (
 	"fmt"
 	"github.com/docopt/docopt-go"
+	"github.com/mrtazz/checkmake/formatters"
 	"github.com/mrtazz/checkmake/logger"
 	"github.com/mrtazz/checkmake/parser"
 	"github.com/mrtazz/checkmake/validator"
-	"github.com/olekukonko/tablewriter"
 	"log"
 	"os"
-	"strconv"
 )
 
 var (
@@ -55,25 +54,9 @@ func main() {
 
 	violations := validator.Validate(makefile, validator.Config{})
 
-	data := make([][]string, len(violations))
+	formatter := formatters.NewDefaultFormatter()
 
-	for idx, val := range violations {
-		data[idx] = []string{val.Rule,
-			val.Violation,
-			strconv.Itoa(val.LineNumber)}
-	}
-
-	table := tablewriter.NewWriter(os.Stdout)
-
-	table.SetHeader([]string{"Rule", "Description", "Line Number"})
-
-	table.SetCenterSeparator(" ")
-	table.SetColumnSeparator(" ")
-	table.SetRowSeparator(" ")
-	table.SetAutoWrapText(true)
-
-	table.AppendBulk(data)
-	table.Render()
+	formatter.Format(violations)
 
 	os.Exit(len(violations))
 }
