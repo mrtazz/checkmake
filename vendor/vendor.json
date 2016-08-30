@@ -6,6 +6,11 @@
 			"path": "github.com/docopt/docopt-go",
 			"revision": "854c423c810880e30b9fecdabb12d54f4a92f9bb",
 			"revisionTime": "2014-11-28T10:09:34-07:00"
+		},
+		{
+			"path": "github.com/olekukonko/tablewriter",
+			"revision": "b9346ac189c55dd419f85c7ad2cd56f810bf19d6",
+			"revisionTime": "2015-08-22T22:52:31+01:00"
 		}
 	]
 }
