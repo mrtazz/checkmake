@@ -11,8 +11,28 @@ not do what you want it to.
 
 ## Usage
 
-```bash
-checkmake Makefile
+```
+% checkmake Makefile
+
+% checkmake --help
+checkmake.
+
+  Usage:
+  checkmake [--debug] <makefile>
+  checkmake -h | --help
+  checkmake --version
+
+  Options:
+  -h --help     Show this screen.
+  --version     Show version.
+  --debug       Enable debug mode
+
+% checkmake fixtures/missing_phony.make
+
+  RULE             DESCRIPTION             LINE NUMBER
+
+  rule1   Target 'all' should be marked    18
+          PHONY.
 ```
 
 ## Inspiration
