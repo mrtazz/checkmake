@@ -7,6 +7,8 @@ package parser
 
 import (
 	"errors"
+	"fmt"
+	"github.com/mrtazz/checkmake/logger"
 	"regexp"
 	"strings"
 )
@@ -160,6 +162,7 @@ func parseRuleOrVariable(scanner *MakefileScanner) (ret interface{}, err error) 
 			LineNumber:     scanner.LineNumber}
 		scanner.Scan()
 	} else {
+		logger.Debug(fmt.Sprintf("Unable to match line '%s' to a Rule or Variable", line))
 		scanner.Scan()
 	}
 
