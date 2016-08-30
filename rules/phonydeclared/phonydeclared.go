@@ -1,6 +1,6 @@
-// Package rule1 implements the ruleset for making sure all targets that don't
+// Package phonydeclared implements the ruleset for making sure all targets that don't
 // have a rule body are marked PHONY
-package rule1
+package phonydeclared
 
 import (
 	"fmt"
@@ -11,25 +11,25 @@ import (
 )
 
 func init() {
-	rules.RegisterRule(&Rule1{})
+	rules.RegisterRule(&Phonydeclared{})
 }
 
-// Rule1 is an empty struct on which to call the rule functions
-type Rule1 struct {
+// Phonydeclared is an empty struct on which to call the rule functions
+type Phonydeclared struct {
 }
 
 // Name returns the name of the rule
-func (r *Rule1) Name() string {
-	return "rule1"
+func (r *Phonydeclared) Name() string {
+	return "phonydeclared"
 }
 
 // Description returns the description of the rule
-func (r *Rule1) Description() string {
+func (r *Phonydeclared) Description() string {
 	return "Every target without a body needs to be marked PHONY"
 }
 
 // Run executes the rule logic
-func (r *Rule1) Run(makefile parser.Makefile, config rules.RuleConfig) rules.RuleViolationList {
+func (r *Phonydeclared) Run(makefile parser.Makefile, config rules.RuleConfig) rules.RuleViolationList {
 	ret := rules.RuleViolationList{}
 
 	ruleIndex := make(map[string]bool)
@@ -46,8 +46,8 @@ func (r *Rule1) Run(makefile parser.Makefile, config rules.RuleConfig) rules.Rul
 		_, ok := ruleIndex[rule.Target]
 		if len(rule.Body) == 0 && ok == false {
 			ret = append(ret, rules.RuleViolation{
-				Rule:       "rule1",
-				Violation:  fmt.Sprintf("Target %q should be marked PHONY.", rule.Target),
+				Rule:       "phonydeclared",
+				Violation:  fmt.Sprintf("Target %q should be declared PHONY.", rule.Target),
 				LineNumber: rule.LineNumber,
 			})
 		}

@@ -1,4 +1,4 @@
-package rule1
+package phonydeclared
 
 import (
 	"github.com/mrtazz/checkmake/parser"
@@ -17,7 +17,7 @@ func TestAllTargetsArePhony(t *testing.T) {
 			Target: "all"}, parser.Rule{Target: "clean"},
 		}}
 
-	rule := Rule1{}
+	rule := Phonydeclared{}
 
 	ret := rule.Run(makefile, rules.RuleConfig{})
 
@@ -35,7 +35,7 @@ func TestMissingOnePhonyTarget(t *testing.T) {
 			Target: "all"}, parser.Rule{Target: "clean"},
 		}}
 
-	rule := Rule1{}
+	rule := Phonydeclared{}
 
 	ret := rule.Run(makefile, rules.RuleConfig{})
 
