@@ -14,6 +14,8 @@ before_install:
 - go get github.com/mattn/goveralls
 - if ! go get github.com/golang/tools/cmd/cover; then go get golang.org/x/tools/cmd/cover; fi
 script:
+- make clean all test
+- ./checkmake Makefile
 - $HOME/gopath/bin/goveralls -service=travis-ci
 deploy:
   provider: script

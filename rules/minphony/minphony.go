@@ -1,6 +1,6 @@
-// Package reqphony implements the ruleset for making sure required phony
-// targets are present
-package reqphony
+// Package minphony implements the ruleset for making sure required minimum
+// phony targets are present
+package minphony
 
 import (
 	"fmt"
@@ -19,26 +19,26 @@ var (
 )
 
 func init() {
-	rules.RegisterRule(&ReqPhony{Required: defaultRequired})
+	rules.RegisterRule(&MinPhony{required: defaultRequired})
 }
 
-// ReqPhony is an empty struct on which to call the rule functions
-type ReqPhony struct {
-	Required []string
+// MinPhony is an empty struct on which to call the rule functions
+type MinPhony struct {
+	required []string
 }
 
 // Name returns the name of the rule
-func (r *ReqPhony) Name() string {
-	return "reqphony"
+func (r *MinPhony) Name() string {
+	return "minphony"
 }
 
 // Description returns the description of the rule
-func (r *ReqPhony) Description() string {
-	return "Required phony targets must be present"
+func (r *MinPhony) Description() string {
+	return "Minimum required phony targets must be present"
 }
 
 // Run executes the rule logic
-func (r *ReqPhony) Run(makefile parser.Makefile, config rules.RuleConfig) rules.RuleViolationList {
+func (r *MinPhony) Run(makefile parser.Makefile, _ rules.RuleConfig) rules.RuleViolationList {
 	ret := rules.RuleViolationList{}
 
 	ruleIndex := make(map[string]bool)
@@ -51,11 +51,11 @@ func (r *ReqPhony) Run(makefile parser.Makefile, config rules.RuleConfig) rules.
 		}
 	}
 
-	for _, reqRule := range r.Required {
+	for _, reqRule := range r.required {
 		_, ok := ruleIndex[reqRule]
 		if !ok {
 			ret = append(ret, rules.RuleViolation{
-				Rule:       "reqphony",
+				Rule:       "minphony",
 				Violation:  fmt.Sprintf("Missing required phony target %q", reqRule),
 				LineNumber: 0,
 			})

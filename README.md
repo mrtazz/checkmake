@@ -29,10 +29,15 @@ checkmake.
 
 % checkmake fixtures/missing_phony.make
 
-  RULE             DESCRIPTION             LINE NUMBER
+    RULE              DESCRIPTION             LINE NUMBER
 
-  rule1   Target 'all' should be marked    18
-          PHONY.
+  rule1      Target "all" should be marked    18
+             PHONY.
+  minphony   Missing required phony target    0
+             "all"
+  minphony   Missing required phony target    0
+             "test"
+
 ```
 
 ## Inspiration

@@ -23,6 +23,7 @@ configurable rules being run against a Makefile.
 -h --help     Show this screen.
 --version     Show version.
 --debug       Enable debug mode
+--list-rules  List registered rules
 ```
 # SEE ALSO
 make(1)
