@@ -24,7 +24,7 @@ func Validate(makefile parser.Makefile, config Config) (ret rules.RuleViolationL
 
 	for name, rule := range rules {
 		logger.Debug(fmt.Sprintf("Running rule '%s'...", name))
-		ret = append(ret, rule.Rule(makefile, config.RuleConfigs[name])...)
+		ret = append(ret, rule.Run(makefile, config.RuleConfigs[name])...)
 	}
 
 	return

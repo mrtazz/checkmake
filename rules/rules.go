@@ -6,10 +6,10 @@ import (
 )
 
 // Rule is the type of a rule function
-type Rule struct {
-	Name        string
-	Description string
-	Rule        func(parser.Makefile, RuleConfig) RuleViolationList
+type Rule interface {
+	Name() string
+	Description() string
+	Run(parser.Makefile, RuleConfig) RuleViolationList
 }
 
 // RuleViolation represents a basic validation failure
@@ -43,7 +43,7 @@ func init() {
 
 // RegisterRule let's you register a rule for inclusion in the validator
 func RegisterRule(r Rule) {
-	ruleRegistry[r.Name] = r
+	ruleRegistry[r.Name()] = r
 }
 
 // GetRegisteredRules returns the internal ruleRegistry

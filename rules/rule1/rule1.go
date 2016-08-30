@@ -10,13 +10,25 @@ import (
 )
 
 func init() {
-	rules.RegisterRule(rules.Rule{
-		Name:        "rule1",
-		Description: "Every target without a body needs to be marked PHONY",
-		Rule:        ruleset})
+	rules.RegisterRule(&Rule1{})
 }
 
-func ruleset(makefile parser.Makefile, config rules.RuleConfig) rules.RuleViolationList {
+// Rule1 is an empty struct on which to call the rule functions
+type Rule1 struct {
+}
+
+// Name returns the name of the rule
+func (r *Rule1) Name() string {
+	return "rule1"
+}
+
+// Description returns the description of the rule
+func (r *Rule1) Description() string {
+	return "Every target without a body needs to be marked PHONY"
+}
+
+// Run executes the rule logic
+func (r *Rule1) Run(makefile parser.Makefile, config rules.RuleConfig) rules.RuleViolationList {
 	ret := rules.RuleViolationList{}
 
 	ruleIndex := make(map[string]bool)
