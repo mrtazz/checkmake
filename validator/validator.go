@@ -4,12 +4,14 @@ package validator
 
 import (
 	"fmt"
+
 	"github.com/mrtazz/checkmake/config"
 	"github.com/mrtazz/checkmake/logger"
 	"github.com/mrtazz/checkmake/parser"
 	"github.com/mrtazz/checkmake/rules"
 	// rules register themselves via their package's init function, so we can
 	// just blank import it
+	_ "github.com/mrtazz/checkmake/rules/minphony"
 	_ "github.com/mrtazz/checkmake/rules/phonydeclared"
 )
 

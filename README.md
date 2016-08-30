@@ -27,12 +27,17 @@ Options:
 --version               Show version.
 --debug                 Enable debug mode
 --config=<configPath>   Configuration file to read
+--list-rules            List registered rules
 
 % checkmake fixtures/missing_phony.make
 
       RULE                 DESCRIPTION             LINE NUMBER
 
-  phonydeclared   Target '"all"' should be         18
+  minphony        Missing required phony target    0
+                  "all"
+  minphony        Missing required phony target    0
+                  "test"
+  phonydeclared   Target "all" should be           18
                   declared PHONY.
 
 ```

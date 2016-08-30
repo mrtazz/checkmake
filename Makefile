@@ -33,15 +33,17 @@ INSTALLED_MAN_TARGETS = $(addprefix $(PREFIX)/share/man/man1/, $(MAN_TARGETS))
 
 # source, dependency and build definitions
 DEPDIR = .d
-$(shell install -d $(DEPDIR))
 MAKEDEPEND = echo "$@: $$(go list -f '{{ join .Deps "\n" }}' $< | awk '/github/ { gsub(/^github.com\/[a-z]*\/[a-z]*\//, ""); printf $$0"/*.go " }')" > $(DEPDIR)/$@.d
 
 $(DEPDIR)/%.d: ;
 .PRECIOUS: $(DEPDIR)/%.d
 
+$(DEPDIR):
+	install -d $@
+
 -include $(patsubst %,$(DEPDIR)/%.d,$(TARGETS))
 
-%: cmd/%/main.go $(DEPDIR)/%.d
+%: cmd/%/main.go $(DEPDIR) $(DEPDIR)/%.d
 	$(MAKEDEPEND)
 	go build -ldflags "$(LDFLAGS)" -o $@ $<
 
@@ -124,12 +126,14 @@ deb: $(SOURCES)
 
 # clean up tasks
 clean-deps:
-	rm -rf $(DEPDIR)
+	$(RM) -r $(DEPDIR)
 
 clean: clean-docs clean-deps
-	rm -rf ./usr
-	rm $(TARGETS)
-	rm $(MAN_TARGETS)
+	$(RM) -r ./usr
+	$(RM) $(TARGETS)
+
+clean-docs:
+	$(RM) $(MAN_TARGETS)
 
 pizza:
 	@echo ""
@@ -138,4 +142,4 @@ pizza:
 	@echo "https://twitter.com/mrb_bk/status/760636493710983168"
 	@echo ""
 
-.PHONY: all test rpm deb install local-install packages govendor coverage clean-deps clean pizza
+.PHONY: all test rpm deb install local-install packages govendor coverage clean-deps clean clean-docs pizza

@@ -2,15 +2,18 @@ package main
 
 import (
 	"fmt"
-	"github.com/docopt/docopt-go"
+	"io"
+	"log"
+	"os"
+
+	docopt "github.com/docopt/docopt-go"
 	"github.com/mrtazz/checkmake/config"
 	"github.com/mrtazz/checkmake/formatters"
 	"github.com/mrtazz/checkmake/logger"
 	"github.com/mrtazz/checkmake/parser"
 	"github.com/mrtazz/checkmake/rules"
 	"github.com/mrtazz/checkmake/validator"
-	"log"
-	"os"
+	"github.com/olekukonko/tablewriter"
 )
 
 var (
@@ -20,12 +23,14 @@ var (
   checkmake [--debug|--config=<configPath>] <makefile>
   checkmake -h | --help
   checkmake --version
+  checkmake --list-rules
 
   Options:
   -h --help               Show this screen.
   --version               Show version.
   --debug                 Enable debug mode
   --config=<configPath>   Configuration file to read
+  --list-rules            List registered rules
 `
 
 	version   = ""
@@ -59,6 +64,11 @@ func parseArgsAndGetFormatter(args map[string]interface{}) (formatters.Formatter
 		logger.SetLogLevel(logger.DebugLevel)
 	}
 
+	if args["--list-rules"] == true {
+		listRules(os.Stdout)
+		os.Exit(0)
+	}
+
 	makefile, parseError := parser.Parse(args["<makefile>"].(string))
 
 	if parseError != nil {
@@ -82,4 +92,21 @@ func parseArgsAndGetFormatter(args map[string]interface{}) (formatters.Formatter
 	formatter := formatters.NewDefaultFormatter()
 
 	return formatter, violations
+}
+
+func listRules(w io.Writer) {
+	data := [][]string{}
+	for _, rule := range rules.GetRegisteredRules() {
+		data = append(data, []string{rule.Name(), rule.Description()})
+	}
+
+	table := tablewriter.NewWriter(w)
+	table.SetHeader([]string{"Name", "Description"})
+	table.SetCenterSeparator(" ")
+	table.SetColumnSeparator(" ")
+	table.SetRowSeparator(" ")
+	table.SetAutoWrapText(true)
+
+	table.AppendBulk(data)
+	table.Render()
 }
