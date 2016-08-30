@@ -53,7 +53,7 @@ all: $(TARGETS) $(MAN_TARGETS)
 
 # development tasks
 test:
-	go test -v $$(go list ./... | grep -v /vendor/ | grep -v /cmd/)
+	go test -v $$(go list ./... | grep -v /vendor/)
 
 coverage:
 	@echo "mode: set" > cover.out

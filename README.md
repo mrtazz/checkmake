@@ -17,15 +17,16 @@ not do what you want it to.
 % checkmake --help
 checkmake.
 
-  Usage:
-  checkmake [--debug] <makefile>
-  checkmake -h | --help
-  checkmake --version
+Usage:
+checkmake [--debug|--config=<configPath>] <makefile>
+checkmake -h | --help
+checkmake --version
 
-  Options:
-  -h --help     Show this screen.
-  --version     Show version.
-  --debug       Enable debug mode
+Options:
+-h --help               Show this screen.
+--version               Show version.
+--debug                 Enable debug mode
+--config=<configPath>   Configuration file to read
 
 % checkmake fixtures/missing_phony.make
 

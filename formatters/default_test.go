@@ -2,6 +2,7 @@ package formatters
 
 import (
 	"bytes"
+	"github.com/mrtazz/checkmake/config"
 	"github.com/mrtazz/checkmake/parser"
 	"github.com/mrtazz/checkmake/validator"
 	"github.com/stretchr/testify/assert"
@@ -15,7 +16,7 @@ func TestDefaultFormatter(t *testing.T) {
 
 	makefile, _ := parser.Parse("../fixtures/missing_phony.make")
 
-	violations := validator.Validate(makefile, validator.Config{})
+	violations := validator.Validate(makefile, &config.Config{})
 	formatter.Format(violations)
 
 	assert.Equal(t, exp, out.String())

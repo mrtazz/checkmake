@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"github.com/docopt/docopt-go"
+	"github.com/mrtazz/checkmake/config"
 	"github.com/mrtazz/checkmake/formatters"
 	"github.com/mrtazz/checkmake/logger"
 	"github.com/mrtazz/checkmake/parser"
+	"github.com/mrtazz/checkmake/rules"
 	"github.com/mrtazz/checkmake/validator"
 	"log"
 	"os"
@@ -15,20 +17,23 @@ var (
 	usage = `checkmake.
 
   Usage:
-  checkmake [--debug] <makefile>
+  checkmake [--debug|--config=<configPath>] <makefile>
   checkmake -h | --help
   checkmake --version
 
   Options:
-  -h --help     Show this screen.
-  --version     Show version.
-  --debug       Enable debug mode
+  -h --help               Show this screen.
+  --version               Show version.
+  --debug                 Enable debug mode
+  --config=<configPath>   Configuration file to read
 `
 
 	version   = ""
 	buildTime = ""
 	builder   = ""
 	goversion = ""
+
+	configPath = "checkmake.ini"
 )
 
 func main() {
@@ -41,6 +46,15 @@ func main() {
 		os.Exit(1)
 	}
 
+	formatter, violations := parseArgsAndGetFormatter(args)
+
+	formatter.Format(violations)
+
+	os.Exit(len(violations))
+}
+
+func parseArgsAndGetFormatter(args map[string]interface{}) (formatters.Formatter,
+	rules.RuleViolationList) {
 	if args["--debug"] == true {
 		logger.SetLogLevel(logger.DebugLevel)
 	}
@@ -52,11 +66,20 @@ func main() {
 		os.Exit(1)
 	}
 
-	violations := validator.Validate(makefile, validator.Config{})
+	if args["--config"] != nil {
+		configPath = args["--config"].(string)
+	}
+
+	cfg, cfgError := config.NewConfigFromFile(configPath)
+
+	if cfgError != nil {
+		logger.Info(fmt.Sprintf("Unable to parse config file %q, running with defaults",
+			configPath))
+	}
+
+	violations := validator.Validate(makefile, cfg)
 
 	formatter := formatters.NewDefaultFormatter()
 
-	formatter.Format(violations)
-
-	os.Exit(len(violations))
+	return formatter, violations
 }
