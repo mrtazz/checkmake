@@ -14,6 +14,11 @@
 			"revisionTime": "2014-11-28T10:09:34-07:00"
 		},
 		{
+			"path": "github.com/go-ini/ini",
+			"revision": "12f418cc7edc5a618a51407b7ac1f1f512139df3",
+			"revisionTime": "2016-03-21T19:18:31-04:00"
+		},
+		{
 			"path": "github.com/olekukonko/tablewriter",
 			"revision": "b9346ac189c55dd419f85c7ad2cd56f810bf19d6",
 			"revisionTime": "2015-08-22T22:52:31+01:00"

@@ -17,27 +17,41 @@ not do what you want it to.
 % checkmake --help
 checkmake.
 
-  Usage:
-  checkmake [--debug] <makefile>
-  checkmake -h | --help
-  checkmake --version
+Usage:
+checkmake [--debug|--config=<configPath>] <makefile>
+checkmake -h | --help
+checkmake --version
 
-  Options:
-  -h --help     Show this screen.
-  --version     Show version.
-  --debug       Enable debug mode
+Options:
+-h --help               Show this screen.
+--version               Show version.
+--debug                 Enable debug mode
+--config=<configPath>   Configuration file to read
+--list-rules            List registered rules
 
 % checkmake fixtures/missing_phony.make
 
-    RULE              DESCRIPTION             LINE NUMBER
+      RULE                 DESCRIPTION             LINE NUMBER
 
-  rule1      Target "all" should be marked    18
-             PHONY.
-  minphony   Missing required phony target    0
-             "all"
-  minphony   Missing required phony target    0
-             "test"
+  minphony        Missing required phony target    0
+                  "all"
+  minphony        Missing required phony target    0
+                  "test"
+  phonydeclared   Target "all" should be           18
+                  declared PHONY.
 
+```
+
+## Installation
+
+There are packages for linux up [on
+packagecloud.io](https://packagecloud.io/mrtazz/checkmake) but you can also
+just clone the repo and build the binary and man page yourself.
+
+```
+go get github.com/mrtazz/checkmake
+cd $GOPATH/src/github.com/mrtazz/checkmake
+make
 ```
 
 ## Inspiration
