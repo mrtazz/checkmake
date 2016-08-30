@@ -8,9 +8,10 @@ package parser
 import (
 	"errors"
 	"fmt"
-	"github.com/mrtazz/checkmake/logger"
 	"regexp"
 	"strings"
+
+	"github.com/mrtazz/checkmake/logger"
 )
 
 // Makefile provides a data structure to describe a parsed Makefile

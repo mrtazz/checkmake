@@ -2,11 +2,13 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"testing"
+
 	"github.com/docopt/docopt-go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func TestMain(t *testing.T) {

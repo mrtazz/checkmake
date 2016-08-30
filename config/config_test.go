@@ -2,10 +2,11 @@
 package config
 
 import (
+	"testing"
+
 	"github.com/mrtazz/checkmake/rules"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func TestSimpleConfig(t *testing.T) {

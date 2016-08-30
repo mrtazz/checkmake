@@ -1,11 +1,12 @@
 package formatters
 
 import (
-	"github.com/mrtazz/checkmake/rules"
-	"github.com/olekukonko/tablewriter"
 	"io"
 	"os"
 	"strconv"
+
+	"github.com/mrtazz/checkmake/rules"
+	"github.com/olekukonko/tablewriter"
 )
 
 // DefaultFormatter is the formatter used by default for CLI output

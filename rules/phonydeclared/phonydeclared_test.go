@@ -1,10 +1,11 @@
 package phonydeclared
 
 import (
+	"testing"
+
 	"github.com/mrtazz/checkmake/parser"
 	"github.com/mrtazz/checkmake/rules"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestAllTargetsArePhony(t *testing.T) {
