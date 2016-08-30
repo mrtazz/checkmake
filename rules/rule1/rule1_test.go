@@ -3,7 +3,7 @@ package rule1
 import (
 	"github.com/mrtazz/checkmake/parser"
 	"github.com/mrtazz/checkmake/rules"
-	th "github.com/mrtazz/checkmake/testhelpers"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -21,7 +21,7 @@ func TestAllTargetsArePhony(t *testing.T) {
 
 	ret := rule.Run(makefile, rules.RuleConfig{})
 
-	th.Expect(t, len(ret), 0)
+	assert.Equal(t, len(ret), 0)
 
 }
 
@@ -39,6 +39,6 @@ func TestMissingOnePhonyTarget(t *testing.T) {
 
 	ret := rule.Run(makefile, rules.RuleConfig{})
 
-	th.Expect(t, len(ret), 1)
+	assert.Equal(t, len(ret), 1)
 
 }
