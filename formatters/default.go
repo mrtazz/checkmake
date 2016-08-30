@@ -3,17 +3,19 @@ package formatters
 import (
 	"github.com/mrtazz/checkmake/rules"
 	"github.com/olekukonko/tablewriter"
+	"io"
 	"os"
 	"strconv"
 )
 
 // DefaultFormatter is the formatter used by default for CLI output
 type DefaultFormatter struct {
+	out io.Writer
 }
 
 // NewDefaultFormatter returns a DefaultFormatter struct
 func NewDefaultFormatter() *DefaultFormatter {
-	return &DefaultFormatter{}
+	return &DefaultFormatter{out: os.Stdout}
 }
 
 // Format is the function to call to get the formatted output
@@ -27,7 +29,7 @@ func (f *DefaultFormatter) Format(violations rules.RuleViolationList) {
 			strconv.Itoa(val.LineNumber)}
 	}
 
-	table := tablewriter.NewWriter(os.Stdout)
+	table := tablewriter.NewWriter(f.out)
 
 	table.SetHeader([]string{"Rule", "Description", "Line Number"})
 
