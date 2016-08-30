@@ -24,6 +24,7 @@ configurable rules being run against a Makefile.
 --version               Show version.
 --debug                 Enable debug mode
 --config=<configPath>   Configuration file to read
+--list-rules            List registered rules
 ```
 
 # CONFIGURATION

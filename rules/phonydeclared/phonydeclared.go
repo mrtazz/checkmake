@@ -4,9 +4,10 @@ package phonydeclared
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/mrtazz/checkmake/parser"
 	"github.com/mrtazz/checkmake/rules"
-	"strings"
 )
 
 func init() {
@@ -46,7 +47,7 @@ func (r *Phonydeclared) Run(makefile parser.Makefile, config rules.RuleConfig) r
 		if len(rule.Body) == 0 && ok == false {
 			ret = append(ret, rules.RuleViolation{
 				Rule:       "phonydeclared",
-				Violation:  fmt.Sprintf("Target '%q' should be declared PHONY.", rule.Target),
+				Violation:  fmt.Sprintf("Target %q should be declared PHONY.", rule.Target),
 				LineNumber: rule.LineNumber,
 			})
 		}
