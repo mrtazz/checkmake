@@ -5,14 +5,15 @@ go:
 addons:
   apt:
     packages:
-      - rpm
-      - pandoc
+    - rpm
+    - pandoc
 before_install:
 - gem install fpm
 - gem install package_cloud
 - go get github.com/axw/gocov/gocov
 - go get github.com/mattn/goveralls
-- if ! go get github.com/golang/tools/cmd/cover; then go get golang.org/x/tools/cmd/cover; fi
+- if ! go get github.com/golang/tools/cmd/cover; then go get golang.org/x/tools/cmd/cover;
+  fi
 script:
 - $HOME/gopath/bin/goveralls -service=travis-ci
 deploy:
@@ -21,3 +22,7 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
+env:
+  global:
+  - secure: STk08ygMm5ua4iCaPYa5VR9W/H1NMzi0w170jSzCCu/bpHuOsGK56N+9h+U9sJJ49bhF+mGbjDicY0I4oJwSIpxBzY9ATycsAgagUUD1V7QRfapISHzPs3PfHmfbGwm0fkrdNcSUBKxt5sZm2gCZYkP4ToTGMVL6p9TF1CO/Q7rdO9NrOwO5adcv5f6BOBGOGOW9KFsfYOpvO2fHw2SSw0lYpQDZlczpWg5bh++zWWsIzW1JM9IQcROXetccIE2+5uyX1Lz+rrBbfhFiiB+inkUm0t8DMXc3augveWfcgdbg/55isZxTwdiFc5YD/kQ84Cr4/HzC/Ol6gozfOL5+yrtTd3xc3Lxk/u+CLzc/zMPiQY/sRoTUa9MkiMCsTQSjvPGXwm7MiW/Ly4/boG5BoSxMGVjQlVe7P1GrJE2yqELLZSkZUO5cYy37jx4kc0aLAc+j0VTNdcZ5Fi3vAAmv3nKxOirB/r8Pp/r8MJRtbCBJ+0s9G+tuSXiP/2zzVjUHaup0b3ZjbTEzaEiqX95V6b7Iqj2xmdD7odbVhghnLPe0iVG3hmP8ZbOKz+aMwOXlcyUnji5UpDuWFqT/459zVJxhKn/lwIfpnI4pNDr1Jb23nEGI9VE7LrBeCv/65gJ8tyKqd3fMtV6ze+8cFHXnOeFtAvU5FE3ZHI2+0mTG0N8=
+  - secure: GaUEs45y8Pwlca4B4sEHlemp2YqPJ46TdT0ek1WIOdLTADJejf8pshlnZQY+Y5KLJ8kPHTeARxft93/DmnI6cmRhgA1DMfmwPDxk8RPEC1tW+mJ6VA5E+Bpuaw2MYsCETPLihhyErFkCUc8MohziOnPkN9+wCpZG0bT8LdMOZ75HNtD/yD5VGsVbEAPr+foq5eJRdYxmYhHyplVZezCy0gCgulX0k+OGdjajzU3kzQM/wsFBOE1+OqIPlwBVZa0GO14fOKc1nVlp2Iyq8ldw/cvZyHwtFVPt0biGMaHDv5+kHSPZrLNqzu/p8xqfnqVTODJonAqoFq/B56giGYnSpCCi0HfzgjCV84WcUWHY+nj8gn6UJM7lOY//GZQMbOhRdys71w0X1ajxaUWWVtZ3faY0Ettr+U0v7QdJiSfLxBFNkfIp/Mb2x4PUf040wnsf78tyLmOHBjHlxJ4m6PtqrKkKn+OuImKIGW9aODWTIlB8Ixd5s5xEn19dQXf2ZSxsOUQoc921FaElvb0P4f5EgWCDaFC94hZjDhoitKYdU4ITzApOMzyGom8yqS80jrZeousAqrHL4tPwMylfJXvKFI4f8IhPY2/97RY99T5Cx7aLNWMuOSz4AjHVQ0bGKRM0jZgWmE89u7ZBUMgkcD9zoZgFoKEucGEbop+EKrHbu/g=
