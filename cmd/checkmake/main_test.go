@@ -24,3 +24,17 @@ func TestMain(t *testing.T) {
 	assert.NotNil(t, formatter)
 	assert.Equal(t, 0, len(violations))
 }
+
+func TestListRules(t *testing.T) {
+	out := new(bytes.Buffer)
+
+	listRules(out)
+
+	assert.Regexp(t, `\s+NAME\s+DESCRIPTION\s+`, out.String())
+	assert.Regexp(t, `phonydeclared\s+Every target without a body`, out.String())
+	assert.Regexp(t, `\s+needs to be marked PHONY`, out.String())
+
+	assert.Regexp(t, `minphony\s+Minimum required phony targets`, out.String())
+	assert.Regexp(t, `\s+must be present`, out.String())
+
+}
