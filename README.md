@@ -36,6 +36,18 @@ Options:
           PHONY.
 ```
 
+## Installation
+
+There are packages for linux up [on
+packagecloud.io](https://packagecloud.io/mrtazz/checkmake) but you can also
+just clone the repo and build the binary and man page yourself.
+
+```
+go get github.com/mrtazz/checkmake
+cd $GOPATH/src/github.com/mrtazz/checkmake
+make
+```
+
 ## Inspiration
 This is totally inspired by an idea by [Dan
 Buch](https://twitter.com/meatballhat/status/768112351924985856).
