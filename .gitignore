@@ -6,3 +6,5 @@ checkmake
 cover.html
 cover.out
 profile.out
+*.rpm
+*.deb
