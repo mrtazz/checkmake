@@ -1,7 +1,7 @@
 # checkmake
 
 [![Build Status](https://travis-ci.org/mrtazz/checkmake.svg?branch=master)](https://travis-ci.org/mrtazz/checkmake)
-[![Coverage Status](https://coveralls.io/repos/mrtazz/checkmake/badge.svg?branch=master&service=github)](https://coveralls.io/github/mrtazz/checkmake?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/mrtazz/checkmake/badge.svg?branch=master)](https://coveralls.io/github/mrtazz/checkmake?branch=master)
 [![Packagecloud](https://img.shields.io/badge/packagecloud-available-brightgreen.svg)](https://packagecloud.io/mrtazz/checkmake)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
