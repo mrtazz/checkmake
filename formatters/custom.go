@@ -21,7 +21,7 @@ func NewCustomFormatter(templateString string) (ret *CustomFormatter, err error)
 	ret = &CustomFormatter{}
 	tmpl, err = template.New("CustomFormatter").Parse(templateString)
 	if err != nil {
-		return
+		return ret, err
 	}
 
 	ret.template = tmpl

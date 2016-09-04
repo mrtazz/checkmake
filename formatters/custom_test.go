@@ -26,3 +26,15 @@ func TestCustomFormatter(t *testing.T) {
 	assert.Regexp(t, `0:minphony:Missing required phony target "test"`, out.String())
 	assert.Regexp(t, `18:phonydeclared:Target "all" should be declared PHONY.`, out.String())
 }
+
+func TestCustomFormatterNewMethod(t *testing.T) {
+	_, err := NewCustomFormatter("{{.LineNumber}}:{{.Rule}}:{{.Violation}}")
+
+	assert.Equal(t, nil, err)
+}
+
+func TestCustomFormatterNewMethodFailing(t *testing.T) {
+	_, err := NewCustomFormatter("{{.LineNumber}}:{{.Rule}}:{{.Violation}}{{end}}")
+
+	assert.NotEqual(t, nil, err)
+}
