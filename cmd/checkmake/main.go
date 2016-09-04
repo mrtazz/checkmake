@@ -20,7 +20,7 @@ var (
 	usage = `checkmake.
 
   Usage:
-  checkmake [--debug|--config=<configPath>] <makefile>
+  checkmake [options] <makefile>
   checkmake -h | --help
   checkmake --version
   checkmake --list-rules
@@ -30,6 +30,7 @@ var (
   --version               Show version.
   --debug                 Enable debug mode
   --config=<configPath>   Configuration file to read
+  --format=<format>       Output format as a Golang text/template template
   --list-rules            List registered rules
 `
 
@@ -89,7 +90,27 @@ func parseArgsAndGetFormatter(args map[string]interface{}) (formatters.Formatter
 
 	violations := validator.Validate(makefile, cfg)
 
-	formatter := formatters.NewDefaultFormatter()
+	var formatter formatters.Formatter
+
+	if args["--format"] != nil {
+		format := args["--format"].(string)
+		var err error
+		formatter, err = formatters.NewCustomFormatter(format)
+		if err != nil {
+			logger.Error(fmt.Sprintf("Unable to create formatter: %q", err.Error()))
+			os.Exit(1)
+		}
+	} else if format, formatErr := cfg.GetConfigValue("format"); formatErr == nil {
+		var err error
+		formatter, err = formatters.NewCustomFormatter(format)
+		if err != nil {
+			logger.Error(fmt.Sprintf("Unable to create formatter: %q", err.Error()))
+			os.Exit(1)
+		}
+
+	} else {
+		formatter = formatters.NewDefaultFormatter()
+	}
 
 	return formatter, violations
 }

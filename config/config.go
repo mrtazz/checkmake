@@ -2,6 +2,7 @@
 package config
 
 import (
+	"fmt"
 	"github.com/go-ini/ini"
 	"github.com/mrtazz/checkmake/logger"
 	"github.com/mrtazz/checkmake/rules"
@@ -44,6 +45,30 @@ func (c *Config) GetRuleConfig(rule string) (ret rules.RuleConfig) {
 				ret[keyName] = key.String()
 			}
 		}
+	}
+
+	return
+}
+
+// GetConfigValue returns a configuration value from the config file from the
+// default section. The way the configuration structure works for now is that
+// sections are mostly for rules and values for checkmake itself are in the
+// default section. That's why we just return values from the default section
+// here.
+func (c *Config) GetConfigValue(keyName string) (value string, err error) {
+	if c.iniFile == nil {
+		logger.Debug("iniFile not initialized")
+		return "", fmt.Errorf("No config file open.")
+	}
+
+	section, err := c.iniFile.GetSection("default")
+
+	if err == nil {
+		key, keyError := section.GetKey(keyName)
+		if keyError != nil {
+			return "", keyError
+		}
+		return key.String(), nil
 	}
 
 	return
