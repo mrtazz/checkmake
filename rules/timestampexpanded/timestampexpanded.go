@@ -1,0 +1,52 @@
+// Package timestampexpanded implements the ruleset for making sure a variable
+// that likely represents a timestamp is simply expanded so it doesn't change
+// in between rule executions.
+package timestampexpanded
+
+import (
+	"fmt"
+	"strings"
+
+	"github.com/mrtazz/checkmake/parser"
+	"github.com/mrtazz/checkmake/rules"
+)
+
+func init() {
+	rules.RegisterRule(&Timestampexpanded{})
+}
+
+// Timestampexpanded is an empty struct on which to call the rule functions
+type Timestampexpanded struct {
+}
+
+var (
+	vT = "Variable %q possibly contains and timestamp and should be simply exapnded."
+)
+
+// Name returns the name of the rule
+func (r *Timestampexpanded) Name() string {
+	return "timestampexpanded"
+}
+
+// Description returns the description of the rule
+func (r *Timestampexpanded) Description() string {
+	return "timestamp variables should be simply expanded"
+}
+
+// Run executes the rule logic
+func (r *Timestampexpanded) Run(makefile parser.Makefile, config rules.RuleConfig) rules.RuleViolationList {
+	ret := rules.RuleViolationList{}
+
+	for _, variable := range makefile.Variables {
+		if strings.Contains(variable.Assignment, "date") &&
+			!variable.SimplyExpanded {
+			ret = append(ret, rules.RuleViolation{
+				Rule:       "timestampexpanded",
+				Violation:  fmt.Sprintf(vT, variable.Name),
+				LineNumber: variable.LineNumber,
+			})
+		}
+	}
+
+	return ret
+}
