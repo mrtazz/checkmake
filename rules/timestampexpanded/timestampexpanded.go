@@ -1,6 +1,9 @@
 // Package timestampexpanded implements the ruleset for making sure a variable
 // that likely represents a timestamp is simply expanded so it doesn't change
-// in between rule executions.
+// in between rule executions. Ideally if you want to follow something like
+// https://reproducible-builds.org/ timestamps in artefacts are frowned upon,
+// however sometimes they are the best tool you have and at least they should
+// be consistent across all build artefacts.
 package timestampexpanded
 
 import (
