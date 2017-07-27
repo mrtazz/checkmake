@@ -13,6 +13,7 @@ import (
 	// just blank import it
 	_ "github.com/mrtazz/checkmake/rules/minphony"
 	_ "github.com/mrtazz/checkmake/rules/phonydeclared"
+	_ "github.com/mrtazz/checkmake/rules/timestampexpanded"
 )
 
 // Validate let's you validate a passed in Makefile with the provided config
