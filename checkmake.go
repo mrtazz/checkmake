@@ -1,0 +1,1 @@
+./cmd/checkmake/main.go
