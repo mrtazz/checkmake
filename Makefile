@@ -21,7 +21,7 @@ LDFLAGS := -X 'main.version=$(VERSION)' \
            -X 'main.goversion=$(GOVERSION)'
 
 PACKAGES := $(shell find ./* -type d | grep -v vendor)
-
+TEST_PKG ?= $(shell go list ./... | grep -v /vendor/)
 
 CMD_SOURCES := $(shell find cmd -name main.go)
 TARGETS := $(patsubst cmd/%/main.go,%,$(CMD_SOURCES))
@@ -55,7 +55,7 @@ all: $(TARGETS) $(MAN_TARGETS)
 
 # development tasks
 test:
-	go test -v $$(go list ./... | grep -v /vendor/)
+	go test -v $(TEST_PKG)
 
 coverage:
 	@echo "mode: set" > cover.out
