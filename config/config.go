@@ -58,7 +58,7 @@ func (c *Config) GetRuleConfig(rule string) (ret rules.RuleConfig) {
 func (c *Config) GetConfigValue(keyName string) (value string, err error) {
 	if c.iniFile == nil {
 		logger.Debug("iniFile not initialized")
-		return "", fmt.Errorf("No config file open.")
+		return "", fmt.Errorf("No config file open")
 	}
 
 	section, err := c.iniFile.GetSection("default")
@@ -66,10 +66,10 @@ func (c *Config) GetConfigValue(keyName string) (value string, err error) {
 	if err == nil {
 		key, keyError := section.GetKey(keyName)
 		if keyError != nil {
-			return "", keyError
+			return "", fmt.Errorf("key '%s' doesn't exist in config", keyName)
 		}
 		return key.String(), nil
 	}
 
-	return
+	return "", fmt.Errorf("config has no default section")
 }
