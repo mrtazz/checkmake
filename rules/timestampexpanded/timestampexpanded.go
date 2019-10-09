@@ -23,7 +23,7 @@ type Timestampexpanded struct {
 }
 
 var (
-	vT = "Variable %q possibly contains and timestamp and should be simply exapnded."
+	vT = "Variable %q possibly contains a timestamp and should be simply expanded."
 )
 
 // Name returns the name of the rule
