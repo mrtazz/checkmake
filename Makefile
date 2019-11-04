@@ -53,6 +53,8 @@ $(DEPDIR):
 all: $(TARGETS) $(MAN_TARGETS)
 .DEFAULT_GOAL:=all
 
+binaries: $(TARGETS)
+
 # development tasks
 test:
 	go test -v $(TEST_PKG)
