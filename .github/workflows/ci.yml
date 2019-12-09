@@ -19,8 +19,13 @@ jobs:
         fetch-depth: 1
         path: go/src/github.com/mrtazz/checkmake
 
-    - name: Run tests
+    - name: Run unit tests
       run: make test
+      env:
+        GOPATH: /home/runner/work/checkmake/go
+    
+    - name: Run checkmake on Makefile
+      run: ./checkmake Makefile
       env:
         GOPATH: /home/runner/work/checkmake/go
 
