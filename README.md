@@ -43,6 +43,17 @@ Options:
 
 ```
 
+## Docker usage
+Build the image, or pull it:
+```sh
+docker build . -t checker
+```
+
+Then run it with your Makefile attached, below is an example of it assuming the Makefile is in your current working directory:
+```sh
+docker run -v $(pwd)/Makefile:/Makefile checker
+```
+
 ## Installation
 
 There are packages for linux up [on
