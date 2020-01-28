@@ -30,7 +30,7 @@ MAN_TARGETS := $(patsubst man/man1/%.md,%,$(MAN_SOURCES))
 
 INSTALLED_TARGETS = $(addprefix $(PREFIX)/bin/, $(TARGETS))
 INSTALLED_MAN_TARGETS = $(addprefix $(PREFIX)/share/man/man1/, $(MAN_TARGETS))
-
+		
 # source, dependency and build definitions
 DEPDIR = .d
 MAKEDEPEND = echo "$@: $$(go list -f '{{ join .Deps "\n" }}' $< | awk '/github/ { gsub(/^github.com\/[a-z]*\/[a-z]*\//, ""); printf $$0"/*.go " }')" > $(DEPDIR)/$@.d
@@ -50,8 +50,12 @@ $(DEPDIR):
 %.1: man/man1/%.1.md
 	sed "s/REPLACE_DATE/$(BUILDDATE)/" $< | pandoc -s -t man -o $@
 
-all: $(TARGETS) $(MAN_TARGETS)
+all: require $(TARGETS) $(MAN_TARGETS)
 .DEFAULT_GOAL:=all
+
+require:
+	@echo "Checking the programs required for the build are installed..."
+	@pandoc --version >/dev/null 2>&1 || (echo "ERROR: pandoc is required."; exit 1)
 
 # development tasks
 test:
