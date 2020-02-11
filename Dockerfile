@@ -9,3 +9,4 @@ FROM alpine:3.9
 USER nobody
 
 COPY --from=builder /go/src/github.com/mrtazz/checkmake/checkmake /
+ENTRYPOINT ["./checkmake", "/Makefile"]

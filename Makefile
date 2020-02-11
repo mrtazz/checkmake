@@ -144,4 +144,4 @@ pizza:
 	@echo "https://twitter.com/mrb_bk/status/760636493710983168"
 	@echo ""
 
-.PHONY: all test rpm deb install local-install packages govendor coverage clean-deps clean clean-docs pizza
+.PHONY: all test rpm deb install local-install packages govendor coverage clean-deps clean clean-docs pizza binaries
