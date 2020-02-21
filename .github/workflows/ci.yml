@@ -17,21 +17,15 @@ jobs:
       uses: actions/checkout@master
       with:
         fetch-depth: 1
-        path: go/src/github.com/mrtazz/checkmake
 
     - name: Run unit tests
       run: make test
-      env:
-        GOPATH: /home/runner/work/checkmake/go
-    
+
     - name: Run checkmake on Makefile
       run: ./checkmake Makefile
-      env:
-        GOPATH: /home/runner/work/checkmake/go
 
   docker:
     needs: build
-    if: github.ref == 'refs/heads/master'
 
     runs-on: ubuntu-latest
 
@@ -39,7 +33,17 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag docker.pkg.github.com/mrtazz/checkmake/checkmake:${GITHUB_SHA}
-    - name: push the docker image
+
+    - name: push the docker image to GPR
+      if: github.ref == 'refs/heads/master'
       run: |
         echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u mrtazz --password-stdin
         docker push docker.pkg.github.com/mrtazz/checkmake/checkmake:${GITHUB_SHA}
+        docker logout docker.pkg.github.com
+
+    - name: push the docker image to docker hub
+      if: github.ref == 'refs/heads/master'
+      run: |
+        echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login hub.docker.com -u mrtazz --password-stdin
+        docker push mrtazz/checkmake:${GITHUB_SHA}
+        docker logout hub.docker.com
