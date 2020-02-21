@@ -22,7 +22,9 @@ jobs:
       run: make test
 
     - name: Run checkmake on Makefile
-      run: ./checkmake Makefile
+      run: |
+        make
+        ./checkmake Makefile
 
   docker:
     needs: build
