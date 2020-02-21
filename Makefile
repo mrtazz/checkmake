@@ -3,6 +3,8 @@
 #
 
 export GO15VENDOREXPERIMENT = 1
+export GO111MODULE = on
+export GOFLAGS = -mod=vendor
 
 # variable definitions
 NAME := checkmake
@@ -50,10 +52,14 @@ $(DEPDIR):
 %.1: man/man1/%.1.md
 	sed "s/REPLACE_DATE/$(BUILDDATE)/" $< | pandoc -s -t man -o $@
 
-all: $(TARGETS) $(MAN_TARGETS)
+all: require $(TARGETS) $(MAN_TARGETS)
 .DEFAULT_GOAL:=all
 
 binaries: $(TARGETS)
+
+require:
+	@echo "Checking the programs required for the build are installed..."
+	@pandoc --version >/dev/null 2>&1 || (echo "ERROR: pandoc is required."; exit 1)
 
 # development tasks
 test:
@@ -72,9 +78,6 @@ coverage:
 benchmark:
 	@echo "Running tests..."
 	@go test -bench=. ${NAME}
-
-govendor:
-	    go get -u github.com/kardianos/govendor
 
 # install tasks
 $(PREFIX)/bin/%: %
@@ -98,6 +101,8 @@ deploy-packages: packages
 	package_cloud push mrtazz/$(NAME)/debian/wheezy *.deb
 	package_cloud push mrtazz/$(NAME)/ubuntu/trusty *.deb
 
+vendor:
+	go mod vendor
 
 rpm: $(SOURCES)
 	  fpm -t rpm -s dir \
@@ -144,4 +149,4 @@ pizza:
 	@echo "https://twitter.com/mrb_bk/status/760636493710983168"
 	@echo ""
 
-.PHONY: all test rpm deb install local-install packages govendor coverage clean-deps clean clean-docs pizza binaries
+.PHONY: all test rpm deb install local-install packages vendor coverage clean-deps clean clean-docs pizza

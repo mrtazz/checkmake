@@ -56,9 +56,14 @@ docker run -v $(pwd)/Makefile:/Makefile checker
 
 ## Installation
 
-There are packages for linux up [on
-packagecloud.io](https://packagecloud.io/mrtazz/checkmake) but you can also
-just clone the repo and build the binary and man page yourself.
+### Requirements
+The [pandoc](https://pandoc.org/) document converter utility is required to run checkmate. You can find out if you have it via `which pandoc`. [Install pandoc](https://pandoc.org/installing.html) if the command was not found.
+
+### Packages
+There are packages for linux up [on packagecloud.io](https://packagecloud.io/mrtazz/checkmake) or build it yourself with the steps below.
+
+### Build
+To build checkmake you will need to have [golang](https://golang.org/) installed. Once you have Go installed, you can simply clone the repo and build the binary and man page yourself with the following commands.
 
 ```
 go get github.com/mrtazz/checkmake
