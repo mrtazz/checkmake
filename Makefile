@@ -3,6 +3,8 @@
 #
 
 export GO15VENDOREXPERIMENT = 1
+export GO111MODULE = on
+export GOFLAGS = -mod=vendor
 
 # variable definitions
 NAME := checkmake
@@ -75,9 +77,6 @@ benchmark:
 	@echo "Running tests..."
 	@go test -bench=. ${NAME}
 
-govendor:
-	    go get -u github.com/kardianos/govendor
-
 # install tasks
 $(PREFIX)/bin/%: %
 	install -d $$(dirname $@)
@@ -100,6 +99,8 @@ deploy-packages: packages
 	package_cloud push mrtazz/$(NAME)/debian/wheezy *.deb
 	package_cloud push mrtazz/$(NAME)/ubuntu/trusty *.deb
 
+vendor:
+	go mod vendor
 
 rpm: $(SOURCES)
 	  fpm -t rpm -s dir \
@@ -146,4 +147,4 @@ pizza:
 	@echo "https://twitter.com/mrb_bk/status/760636493710983168"
 	@echo ""
 
-.PHONY: all test rpm deb install local-install packages govendor coverage clean-deps clean clean-docs pizza
+.PHONY: all test rpm deb install local-install packages vendor coverage clean-deps clean clean-docs pizza
