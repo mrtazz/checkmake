@@ -21,6 +21,11 @@ jobs:
     - name: Run unit tests
       run: make test
 
+    - name: install dependencies
+      run: |
+        sudo wget https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
+        sudo dpkg -i pandoc-2.7.3-1-amd64.deb
+
     - name: Run checkmake on Makefile
       run: |
         make
