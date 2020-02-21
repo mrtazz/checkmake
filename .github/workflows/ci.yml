@@ -18,18 +18,16 @@ jobs:
       with:
         fetch-depth: 1
 
-    - name: Run unit tests
-      run: make test
-
     - name: install dependencies
       run: |
         sudo wget https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
         sudo dpkg -i pandoc-2.7.3-1-amd64.deb
 
+    - name: build and run unit tests
+      run: make clean all test
+
     - name: Run checkmake on Makefile
-      run: |
-        make
-        ./checkmake Makefile
+      run: ./checkmake Makefile
 
   docker:
     needs: build
