@@ -3,7 +3,7 @@ on: push
 jobs:
 
   build:
-    name: Build
+    name: build and test
     runs-on: ubuntu-latest
     steps:
 
@@ -31,6 +31,7 @@ jobs:
 
   docker:
     needs: build
+    name: docker image build and release
 
     runs-on: ubuntu-latest
 
