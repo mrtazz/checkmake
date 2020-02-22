@@ -44,4 +44,5 @@ jobs:
       run: |
         echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login hub.docker.com -u mrtazz --password-stdin
         docker push mrtazz/checkmake:${GITHUB_SHA}
+        docker push mrtazz/checkmake:latest
         docker logout hub.docker.com
