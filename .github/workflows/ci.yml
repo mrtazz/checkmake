@@ -1,0 +1,49 @@
+name: CI
+on: push
+jobs:
+
+  build:
+    name: build and test
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go 1.13
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.13
+      id: go
+
+    - name: Check out code
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 1
+
+    - name: install dependencies
+      run: |
+        sudo wget https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
+        sudo dpkg -i pandoc-2.7.3-1-amd64.deb
+
+    - name: build and run unit tests
+      run: make clean all test
+
+    - name: Run checkmake on Makefile
+      run: ./checkmake Makefile
+
+  docker:
+    needs: build
+    name: docker image build and release
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag mrtazz/checkmake:${GITHUB_SHA} --tag mrtazz/checkmake:latest
+
+    - name: push the docker image to docker hub
+      if: github.ref == 'refs/heads/master'
+      run: |
+        echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login hub.docker.com -u mrtazz --password-stdin
+        docker push mrtazz/checkmake:${GITHUB_SHA}
+        docker push mrtazz/checkmake:latest
+        docker logout hub.docker.com
