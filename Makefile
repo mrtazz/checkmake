@@ -14,7 +14,19 @@ VERSION := $(shell git describe --tags --always --dirty)
 GOVERSION := $(shell go version)
 BUILDTIME := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 BUILDDATE := $(shell date -u +"%B %d, %Y")
-BUILDER := $(shell echo "`git config user.name` <`git config user.email`>")
+
+NAME := $(if $(BUILDER_NAME),$(BUILDER_NAME),$(shell git config user.name))
+ifndef NAME
+$(error "You must set environment variable BUILDER_NAME or set a user.name in your git configuration.")
+endif
+
+EMAIL := $(if $(BUILDER_EMAIL),$(BUILDER_EMAIL),$(shell git config user.email))
+ifndef EMAIL
+$(error "You must set environment variable BUILDER_EMAIL or set a user.email in your git configuration.")
+endif
+
+BUILDER := $(shell echo "${NAME} <${EMAIL}>")
+
 PKG_RELEASE ?= 1
 PROJECT_URL := "https://github.com/mrtazz/$(NAME)"
 LDFLAGS := -X 'main.version=$(VERSION)' \

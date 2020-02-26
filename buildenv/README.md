@@ -13,9 +13,17 @@ to generate a build environment (docker image). This docker images can be used t
 # Build Checkmake Binary
 Run 
 ```
-docker run --rm -v $(pwd):/data --workdir /data checkmake/buildenv:latest make
+docker run --rm -e BUILDER_NAME="Your Name" -e BUILDER_EMAIL="your.name@example.com" -v $(pwd):/data --workdir /data checkmake/buildenv:latest make
 ```
-to generate the checkmake binary.
+to generate the checkmake binary. (Replace "Your name" with your name and "your.name@example.com" with your email address)
+
+An alternative is to define the variables on your host system an then pass it to docker:
+``` 
+export BUILDER_NAME="Your Name"
+export BUILDER_EMAIL="your.name@example.com"
+docker run --rm -e BUILDER_NAME -e BUILDER_EMAIL -v $(pwd):/data --workdir /data checkmake/buildenv:latest make
+```
+
 Output is similar to:
 ```
 Checking the programs required for the build are installed...
@@ -32,5 +40,5 @@ Run checkmake binary:
 ```
 to test the binary. Output should be similar to:
 ```
-checkmake 0.1.0-22-g42f1561 built at 2020-02-23T16:02:51Z by  <> with go version go1.13.8 linux/amd64
+checkmake 0.1.0-22-g42f1561 built at 2020-02-23T16:02:51Z by Your Name <your.name@example.com> with go version go1.13.8 linux/amd64
 ```
