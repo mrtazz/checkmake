@@ -26,17 +26,17 @@ var mpRunTests = []struct {
 			rules.RuleViolation{
 				Rule:       "minphony",
 				Violation:  "Missing required phony target \"kleen\"",
-				LineNumber: 0,
+				LineNumber: -1,
 			},
 			rules.RuleViolation{
 				Rule:       "minphony",
 				Violation:  "Missing required phony target \"awl\"",
-				LineNumber: 0,
+				LineNumber: -1,
 			},
 			rules.RuleViolation{
 				Rule:       "minphony",
 				Violation:  "Missing required phony target \"toast\"",
-				LineNumber: 0,
+				LineNumber: -1,
 			},
 		},
 	},
@@ -55,7 +55,7 @@ var mpRunTests = []struct {
 			rules.RuleViolation{
 				Rule:       "minphony",
 				Violation:  "Missing required phony target \"toast\"",
-				LineNumber: 0,
+				LineNumber: -1,
 			},
 		},
 	},

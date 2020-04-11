@@ -21,10 +21,9 @@ func TestCustomFormatter(t *testing.T) {
 
 	violations := validator.Validate(makefile, &config.Config{})
 	formatter.Format(violations)
-
-	assert.Regexp(t, `0:minphony:Missing required phony target "all"`, out.String())
-	assert.Regexp(t, `0:minphony:Missing required phony target "test"`, out.String())
-	assert.Regexp(t, `18:phonydeclared:Target "all" should be declared PHONY.`, out.String())
+	assert.Regexp(t, `21:minphony:Missing required phony target "all"`, out.String())
+	assert.Regexp(t, `21:minphony:Missing required phony target "test"`, out.String())
+	assert.Regexp(t, `16:phonydeclared:Target "all" should be declared PHONY.`, out.String())
 }
 
 func TestCustomFormatterNewMethod(t *testing.T) {
