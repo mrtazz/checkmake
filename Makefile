@@ -145,10 +145,4 @@ pizza: # ignore checkmake
 	@echo ""
 	@echo ""
 
-.PHONY: validate
-validate:
-	docker run -i --rm \
-		-v $(TERRAFORM_MODULE_PATH):/data \
-		hashicorp/terraform:light validate
-
-.PHONY: all rpm deb install local-install packages govendor coverage clean-deps clean clean-docs pizza binaries
+.PHONY: all test rpm deb install local-install packages govendor coverage clean-deps clean clean-docs pizza binaries
