@@ -3,7 +3,7 @@ on: push
 jobs:
 
   build:
-    name: Build
+    name: build and test
     runs-on: ubuntu-latest
     steps:
 
@@ -17,29 +17,33 @@ jobs:
       uses: actions/checkout@master
       with:
         fetch-depth: 1
-        path: go/src/github.com/mrtazz/checkmake
 
-    - name: Run unit tests
-      run: make test
-      env:
-        GOPATH: /home/runner/work/checkmake/go
-    
+    - name: install dependencies
+      run: |
+        sudo wget https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
+        sudo dpkg -i pandoc-2.7.3-1-amd64.deb
+
+    - name: build and run unit tests
+      run: make clean all test
+
     - name: Run checkmake on Makefile
       run: ./checkmake Makefile
-      env:
-        GOPATH: /home/runner/work/checkmake/go
 
   docker:
     needs: build
-    if: github.ref == 'refs/heads/master'
+    name: docker image build and release
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag docker.pkg.github.com/mrtazz/checkmake/checkmake:${GITHUB_SHA}
-    - name: push the docker image
+      run: docker build . --file Dockerfile --tag mrtazz/checkmake:${GITHUB_SHA} --tag mrtazz/checkmake:latest
+
+    - name: push the docker image to docker hub
+      if: github.ref == 'refs/heads/master'
       run: |
-        echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u mrtazz --password-stdin
-        docker push docker.pkg.github.com/mrtazz/checkmake/checkmake:${GITHUB_SHA}
+        echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login hub.docker.com -u mrtazz --password-stdin
+        docker push mrtazz/checkmake:${GITHUB_SHA}
+        docker push mrtazz/checkmake:latest
+        docker logout hub.docker.com
