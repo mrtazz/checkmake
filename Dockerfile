@@ -4,8 +4,9 @@ ARG BUILDER_NAME BUILDER_EMAIL
 
 COPY . /go/src/github.com/mrtazz/checkmake
 
-RUN cd /go/src/github.com/mrtazz/checkmake && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 make binaries
-RUN cd /go/src/github.com/mrtazz/checkmake && make test
+WORKDIR /go/src/github.com/mrtazz/checkmake
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 make binaries
+RUN make test
 
 FROM alpine:3.9
 RUN apk add make
