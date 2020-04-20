@@ -9,7 +9,7 @@ WORKDIR /go/src/github.com/mrtazz/checkmake
 RUN make binaries
 RUN make test
 
-FROM alpine:3.9
+FROM alpine:3.11
 RUN apk add make
 USER nobody
 
