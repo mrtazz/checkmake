@@ -7,7 +7,7 @@ WORKDIR /checkmake
 
 RUN make binaries
 
-FROM alpine:3.9
+FROM alpine:3.11
 
 USER nobody
 
