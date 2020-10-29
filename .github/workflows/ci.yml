@@ -27,7 +27,7 @@ jobs:
       run: make clean all test
       env:
         BUILDER_NAME: "github-actions"
-        BUILDER_EMAIL: "noreply@github-actions.com
+        BUILDER_EMAIL: "noreply@github-actions.com"
 
     - name: Run checkmake on Makefile
       run: ./checkmake Makefile
