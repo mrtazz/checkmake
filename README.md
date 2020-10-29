@@ -67,6 +67,9 @@ To build checkmake you will need to have [golang](https://golang.org/) installed
 
 ```
 go get github.com/mrtazz/checkmake
+# or if your OS doesn't support symlinks
+go get github.com/mrtazz/checkmake/cmd/checkmake
+
 cd $GOPATH/src/github.com/mrtazz/checkmake
 make
 ```
