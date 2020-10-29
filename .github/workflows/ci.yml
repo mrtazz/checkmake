@@ -25,6 +25,8 @@ jobs:
 
     - name: build and run unit tests
       run: make clean all test
+      env:
+        BUILDER_NAME: "github-actions"
 
     - name: Run checkmake on Makefile
       run: ./checkmake Makefile
