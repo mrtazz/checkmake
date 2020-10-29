@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
-
 	"github.com/mrtazz/checkmake/logger"
 )
 
@@ -121,6 +120,7 @@ func parseRuleOrVariable(scanner *MakefileScanner) (ret interface{}, err error) 
 	if matches := reFindRule.FindStringSubmatch(line); matches != nil {
 		// we found a rule so we need to advance the scanner to figure out if
 		// there is a body
+		beginLineNumber := scanner.LineNumber - 1
 		scanner.Scan()
 		bodyMatches := reFindRuleBody.FindStringSubmatch(scanner.Text())
 		ruleBody := make([]string, 0, 20)
@@ -147,7 +147,7 @@ func parseRuleOrVariable(scanner *MakefileScanner) (ret interface{}, err error) 
 			Target:       strings.TrimSpace(matches[1]),
 			Dependencies: filteredDeps,
 			Body:         ruleBody,
-			LineNumber:   scanner.LineNumber}
+			LineNumber:   beginLineNumber}
 	} else if matches := reFindSimpleVariable.FindStringSubmatch(line); matches != nil {
 		ret = Variable{
 			Name:           strings.TrimSpace(matches[1]),

@@ -142,11 +142,12 @@ clean: clean-docs clean-deps
 clean-docs:
 	$(RM) $(MAN_TARGETS)
 
-pizza:
+pizza: # ignore checkmake
 	@echo ""
 	@echo "🍕 🍕 🍕 🍕 🍕 🍕   make.pizza 🍕 🍕 🍕 🍕 🍕 🍕 "
 	@echo ""
 	@echo "https://twitter.com/mrb_bk/status/760636493710983168"
+	@echo ""
 	@echo ""
 
 .PHONY: all test rpm deb install local-install packages vendor coverage clean-deps clean clean-docs pizza binaries

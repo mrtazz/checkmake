@@ -42,9 +42,10 @@ func (r *MinPhony) Run(makefile parser.Makefile, _ rules.RuleConfig) rules.RuleV
 	ret := rules.RuleViolationList{}
 
 	ruleIndex := make(map[string]bool)
-
+	ruleLineNumber := 0
 	for _, variable := range makefile.Variables {
 		if variable.Name == "PHONY" {
+			ruleLineNumber = variable.LineNumber - 1
 			for _, phony := range strings.Split(variable.Assignment, " ") {
 				ruleIndex[phony] = true
 			}
@@ -57,7 +58,7 @@ func (r *MinPhony) Run(makefile parser.Makefile, _ rules.RuleConfig) rules.RuleV
 			ret = append(ret, rules.RuleViolation{
 				Rule:       "minphony",
 				Violation:  fmt.Sprintf("Missing required phony target %q", reqRule),
-				LineNumber: 0,
+				LineNumber: ruleLineNumber,
 			})
 		}
 	}

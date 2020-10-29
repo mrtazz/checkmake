@@ -41,7 +41,7 @@ func (r *Timestampexpanded) Run(makefile parser.Makefile, config rules.RuleConfi
 	ret := rules.RuleViolationList{}
 
 	for _, variable := range makefile.Variables {
-		if strings.Contains(variable.Assignment, "date") &&
+		if strings.Contains(variable.Assignment, " date") &&
 			!variable.SimplyExpanded {
 			ret = append(ret, rules.RuleViolation{
 				Rule:       "timestampexpanded",

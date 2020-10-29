@@ -20,6 +20,6 @@ func TestDefaultFormatter(t *testing.T) {
 	formatter.Format(violations)
 
 	assert.Regexp(t, `\s+RULE\s+DESCRIPTION\s+LINE NUMBER\s+`, out.String())
-	assert.Regexp(t, `phonydeclared\s+Target "all" should be.+\s+18`, out.String())
+	assert.Regexp(t, `phonydeclared\s+Target "all" should be.+\s+16`, out.String())
 	assert.Regexp(t, `\s+declared PHONY`, out.String())
 }

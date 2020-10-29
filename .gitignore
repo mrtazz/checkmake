@@ -8,3 +8,4 @@ cover.out
 profile.out
 *.rpm
 *.deb
+.idea/
