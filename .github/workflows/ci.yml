@@ -24,7 +24,8 @@ jobs:
         sudo dpkg -i pandoc-2.7.3-1-amd64.deb
 
     - name: build and run unit tests
-      run: make clean all test
+      run: make clean all test BUILDER_NAME="$(git log -1 --pretty=format:'%an')" BUILDER_EMAIL=$(git log -1 --pretty=format:'%ae')
+
 
     - name: Run checkmake on Makefile
       run: ./checkmake Makefile
@@ -38,7 +39,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag mrtazz/checkmake:${GITHUB_SHA} --tag mrtazz/checkmake:latest
+      run: docker build . --file Dockerfile --tag mrtazz/checkmake:${GITHUB_SHA} --tag mrtazz/checkmake:latest --build-arg BUILDER_NAME="$(git log -1 --pretty=format:'%an')" --build-arg BUILDER_EMAIL=$(git log -1 --pretty=format:'%ae')
+
 
     - name: push the docker image to docker hub
       if: github.ref == 'refs/heads/master'

@@ -9,3 +9,5 @@ profile.out
 *.rpm
 *.deb
 .idea/
+
+*.sw?
