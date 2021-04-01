@@ -54,7 +54,9 @@ func main() {
 
 	formatter, violations := parseArgsAndGetFormatter(args)
 
-	formatter.Format(violations)
+	if len(violations) > 0 {
+		formatter.Format(violations)
+	}
 
 	os.Exit(len(violations))
 }
