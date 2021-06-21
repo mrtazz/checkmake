@@ -46,7 +46,7 @@ Options:
 ## Docker usage
 Build the image, or pull it:
 ```sh
-docker build . -t checker
+docker build -e BUILDER_NAME="Your Name" -e BUILDER_EMAIL="your.name@example.com" . -t checker
 ```
 
 Then run it with your Makefile attached, below is an example of it assuming the Makefile is in your current working directory:
