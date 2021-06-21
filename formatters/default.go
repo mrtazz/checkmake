@@ -21,7 +21,6 @@ func NewDefaultFormatter() *DefaultFormatter {
 
 // Format is the function to call to get the formatted output
 func (f *DefaultFormatter) Format(violations rules.RuleViolationList) {
-
 	data := make([][]string, len(violations))
 
 	for idx, val := range violations {
@@ -37,6 +36,7 @@ func (f *DefaultFormatter) Format(violations rules.RuleViolationList) {
 	table.SetCenterSeparator(" ")
 	table.SetColumnSeparator(" ")
 	table.SetRowSeparator(" ")
+	table.SetBorder(false)
 	table.SetAutoWrapText(true)
 
 	table.AppendBulk(data)
