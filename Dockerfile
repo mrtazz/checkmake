@@ -1,9 +1,16 @@
 FROM golang:1.13 as builder
 
-COPY . /checkmake
+ENV BUILDER_NAME=checkmake
+ENV BUILDER_EMAIL=mrtazz@github.com
+ENV GOOS=linux
+ENV GOARCH=amd64
+ENV CGO_ENABLED=0
 
-RUN cd /go/src/github.com/mrtazz/checkmake && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 make binaries
-RUN cd /go/src/github.com/mrtazz/checkmake && make test
+COPY . /checkmake
+WORKDIR /checkmake
+
+RUN make binaries
+RUN make test
 
 FROM alpine:3.9
 RUN apk add make
