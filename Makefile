@@ -45,20 +45,7 @@ MAN_TARGETS := $(patsubst man/man1/%.md,%,$(MAN_SOURCES))
 INSTALLED_TARGETS = $(addprefix $(PREFIX)/bin/, $(TARGETS))
 INSTALLED_MAN_TARGETS = $(addprefix $(PREFIX)/share/man/man1/, $(MAN_TARGETS))
 
-# source, dependency and build definitions
-DEPDIR = .d
-MAKEDEPEND = echo "$@: $$(go list -f '{{ join .Deps "\n" }}' $< | awk '/github/ { gsub(/^github.com\/[a-z]*\/[a-z]*\//, ""); printf $$0"/*.go " }')" > $(DEPDIR)/$@.d
-
-$(DEPDIR)/%.d: ;
-.PRECIOUS: $(DEPDIR)/%.d
-
-$(DEPDIR):
-	install -d $@
-
--include $(patsubst %,$(DEPDIR)/%.d,$(TARGETS))
-
-%: cmd/%/main.go $(DEPDIR) $(DEPDIR)/%.d
-	$(MAKEDEPEND)
+%: cmd/%/main.go
 	go build -ldflags "$(LDFLAGS)" -o $@ $<
 
 %.1: man/man1/%.1.md
@@ -144,9 +131,6 @@ deb: $(SOURCES)
 
 
 # clean up tasks
-clean-deps:
-	$(RM) -r $(DEPDIR)
-
 clean: clean-docs clean-deps
 	$(RM) -r ./usr
 	$(RM) $(TARGETS)
