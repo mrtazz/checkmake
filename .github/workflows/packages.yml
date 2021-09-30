@@ -1,5 +1,9 @@
 name: packages
-on: tags
+on:
+  push:
+    tags:
+      - '*'
+
 jobs:
   packages:
     name: build and deploy
