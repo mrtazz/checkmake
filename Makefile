@@ -96,9 +96,9 @@ local-install:
 packages: local-install rpm deb
 
 deploy-packages: packages
-	package_cloud push mrtazz/$(NAME)/el/7 *.rpm
-	package_cloud push mrtazz/$(NAME)/debian/wheezy *.deb
-	package_cloud push mrtazz/$(NAME)/ubuntu/trusty *.deb
+	package_cloud push mrtazz/$(NAME)/el/8 *.rpm
+	package_cloud push mrtazz/$(NAME)/debian/trixie *.deb
+	package_cloud push mrtazz/$(NAME)/ubuntu/hirsute *.deb
 
 vendor:
 	go mod vendor
