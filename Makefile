@@ -129,6 +129,12 @@ deb: $(SOURCES)
     --vendor mrtazz \
     usr
 
+.PHONY: github-release
+github-release: packages
+	echo ${GITHUB_TOKEN} | gh auth login --with-token
+	gh release create $(VERSION) --title 'Release $(VERSION)' $(NAME)_$(VERSION)-$(PKG_RELEASE)_amd64.deb $(NAME)-$(VERSION)-$(PKG_RELEASE).x86_64.rpm
+
+
 
 # clean up tasks
 clean: clean-docs clean-deps

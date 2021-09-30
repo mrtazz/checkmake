@@ -39,3 +39,8 @@ jobs:
       run: make deploy-packages
       env:
         PACKAGECLOUD_TOKEN: ${{ secrets.PACKAGECLOUD_TOKEN }}
+
+    - name: create release
+      run: make github-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
