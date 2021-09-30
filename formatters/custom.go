@@ -38,7 +38,6 @@ func (f *CustomFormatter) Format(violations rules.RuleViolationList) {
 		if err != nil {
 			logger.Error(err.Error())
 		}
-		io.WriteString(f.out, "\r\n")
 	}
 
 }
