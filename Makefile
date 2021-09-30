@@ -131,7 +131,6 @@ deb: $(SOURCES)
 
 .PHONY: github-release
 github-release:
-	echo ${GITHUB_TOKEN} | gh auth login --with-token
 	gh release create $(VERSION) --title 'Release $(VERSION)' --notes-file docs/releases/$(VERSION).md $(NAME)_$(VERSION)-$(PKG_RELEASE)_amd64.deb $(NAME)-$(VERSION)-$(PKG_RELEASE).x86_64.rpm
 
 
