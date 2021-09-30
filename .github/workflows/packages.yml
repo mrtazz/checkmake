@@ -1,0 +1,31 @@
+name: packages
+on: tags
+jobs:
+  packages:
+    name: build and deploy
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go 1.13
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.13
+      id: go
+
+    - name: Check out code
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 1
+
+    - name: install dependencies
+      run: |
+        sudo wget https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
+        sudo dpkg -i pandoc-2.7.3-1-amd64.deb
+
+    - name: build and run unit tests
+      run: BUILDER_NAME=CI BUILDER_EMAIL=ci@actions.github.com make clean all test
+
+    - name: deploy packages
+      run: make deploy-packages
+      env:
+        PACKAGECLOUD_TOKEN: ${{ secrets.PACKAGECLOUD_TOKEN }}
