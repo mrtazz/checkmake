@@ -15,8 +15,8 @@ GOVERSION := $(shell go version)
 BUILDTIME := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 BUILDDATE := $(shell date -u +"%B %d, %Y")
 
-NAME := $(if $(BUILDER_NAME),$(BUILDER_NAME),$(shell git config user.name))
-ifndef NAME
+BUILDER_NAME := $(if $(BUILDER_NAME),$(BUILDER_NAME),$(shell git config user.name))
+ifndef BUILDER_NAME
 $(error "You must set environment variable BUILDER_NAME or set a user.name in your git configuration.")
 endif
 
