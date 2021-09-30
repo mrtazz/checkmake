@@ -38,7 +38,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build --build-args BUILDER_NAME=CI --build-args BUILDER_EMAIL=ci@test.only . --file Dockerfile --tag mrtazz/checkmake:${GITHUB_SHA} --tag mrtazz/checkmake:latest
+      run: docker build --build-arg BUILDER_NAME=CI --build-arg BUILDER_EMAIL=ci@test.only . --file Dockerfile --tag mrtazz/checkmake:${GITHUB_SHA} --tag mrtazz/checkmake:latest
 
     - name: push the docker image to docker hub
       if: github.ref == 'refs/heads/main'
