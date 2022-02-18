@@ -46,12 +46,12 @@ Options:
 ## Docker usage
 Build the image, or pull it:
 ```sh
-docker build --build-arg BUILDER_NAME="Your Name" -build-arg BUILDER_EMAIL="your.name@example.com" . -t checker
+docker build --build-arg BUILDER_NAME='Your Name' --build-arg BUILDER_EMAIL=your.name@example.com . -t checker
 ```
 
 Then run it with your Makefile attached, below is an example of it assuming the Makefile is in your current working directory:
 ```sh
-docker run -v $(pwd)/Makefile:/Makefile checker
+docker run -v "$PWD"/Makefile:/Makefile checker
 ```
 
 ## Installation
@@ -65,9 +65,9 @@ There are packages for linux up [on packagecloud.io](https://packagecloud.io/mrt
 ### Build
 To build checkmake you will need to have [golang](https://golang.org/) installed. Once you have Go installed, you can simply clone the repo and build the binary and man page yourself with the following commands.
 
-```
+```sh
 go get github.com/mrtazz/checkmake
-cd $GOPATH/src/github.com/mrtazz/checkmake
+cd "$GOPATH"/src/github.com/mrtazz/checkmake
 make
 ```
 
