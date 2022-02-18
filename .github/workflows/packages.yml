@@ -65,6 +65,12 @@ jobs:
         sudo wget https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
         sudo dpkg -i pandoc-2.7.3-1-amd64.deb
 
+    - name: build for platforms
+      run: |
+        BUILD_GOARCH=amd64 BUILD_GOOS=freebsd make build-standalone
+        BUILD_GOARCH=amd64 BUILD_GOOS=linux   make build-standalone
+        BUILD_GOARCH=amd64 BUILD_GOOS=darwin  make build-standalone
+
     - name: create release
       run: make github-release
       env:

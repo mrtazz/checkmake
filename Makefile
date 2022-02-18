@@ -2,7 +2,6 @@
 # some housekeeping tasks
 #
 
-export GO15VENDOREXPERIMENT = 1
 export GO111MODULE = on
 export GOFLAGS = -mod=vendor
 
@@ -15,6 +14,15 @@ GOVERSION := $(shell go version)
 BUILDTIME := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 BUILDDATE := $(shell date -u +"%B %d, %Y")
 
+BUILD_GOOS ?= $(shell go env GOOS)
+BUILD_GOARCH ?= $(shell go env GOARCH)
+
+RELEASE_ARTIFACTS_DIR := .release_artifacts
+CHECKSUM_FILE := checksums.txt
+
+$(RELEASE_ARTIFACTS_DIR):
+	install -d $@
+
 BUILDER_NAME := $(if $(BUILDER_NAME),$(BUILDER_NAME),$(shell git config user.name))
 ifndef BUILDER_NAME
 $(error "You must set environment variable BUILDER_NAME or set a user.name in your git configuration.")
@@ -25,7 +33,7 @@ ifndef EMAIL
 $(error "You must set environment variable BUILDER_EMAIL or set a user.email in your git configuration.")
 endif
 
-BUILDER := $(shell echo "${NAME} <${EMAIL}>")
+BUILDER := $(shell echo "${BUILDER_NAME} <${EMAIL}>")
 
 PKG_RELEASE ?= 1
 PROJECT_URL := "https://github.com/mrtazz/$(NAME)"
@@ -46,7 +54,7 @@ INSTALLED_TARGETS = $(addprefix $(PREFIX)/bin/, $(TARGETS))
 INSTALLED_MAN_TARGETS = $(addprefix $(PREFIX)/share/man/man1/, $(MAN_TARGETS))
 
 %: cmd/%/main.go
-	go build -ldflags "$(LDFLAGS)" -o $@ $<
+	GOOS=$(BUILD_GOOS) GOARCH=$(BUILD_GOARCH) go build -ldflags "$(LDFLAGS)" -o $@ $<
 
 %.1: man/man1/%.1.md
 	sed "s/REPLACE_DATE/$(BUILDDATE)/" $< | pandoc -s -t man -o $@
@@ -129,10 +137,15 @@ deb: $(SOURCES)
     --vendor mrtazz \
     usr
 
+.PHONY: build-standalone
+build-standalone: all $(RELEASE_ARTIFACTS_DIR)
+	mv checkmake.1 $(RELEASE_ARTIFACTS_DIR)
+	mv checkmake $(RELEASE_ARTIFACTS_DIR)/checkmake-$(VERSION).$(BUILD_GOOS).$(BUILD_GOARCH)
+	cd $(RELEASE_ARTIFACTS_DIR) && shasum -a 256 checkmake-$(VERSION).$(BUILD_GOOS).$(BUILD_GOARCH) >> $(CHECKSUM_FILE)
+
 .PHONY: github-release
 github-release:
-	gh release create $(VERSION) --title 'Release $(VERSION)' --notes-file docs/releases/$(VERSION).md $(NAME)_$(VERSION)-$(PKG_RELEASE)_amd64.deb $(NAME)-$(VERSION)-$(PKG_RELEASE).x86_64.rpm
-
+	gh release create $(VERSION) --title 'Release $(VERSION)' --notes-file docs/releases/$(VERSION).md $(RELEASE_ARTIFACTS_DIR)/*
 
 
 # clean up tasks
