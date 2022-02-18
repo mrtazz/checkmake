@@ -66,11 +66,8 @@ There are packages for linux up [on packagecloud.io](https://packagecloud.io/mrt
 To build checkmake you will need to have [golang](https://golang.org/) installed. Once you have Go installed, you can simply clone the repo and build the binary and man page yourself with the following commands.
 
 ```sh
-go get github.com/mrtazz/checkmake
-# or if your OS doesn't support symlinks
-go get github.com/mrtazz/checkmake/cmd/checkmake
-
-cd $GOPATH/src/github.com/mrtazz/checkmake
+git clone https://github.com/mrtazz/checkmake
+cd checkmake
 make
 ```
 
