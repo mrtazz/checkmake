@@ -9,3 +9,4 @@ profile.out
 *.rpm
 *.deb
 .idea/
+.release_artifacts/
