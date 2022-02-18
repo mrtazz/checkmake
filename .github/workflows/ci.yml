@@ -28,7 +28,7 @@ jobs:
         sudo dpkg -i pandoc-2.7.3-1-amd64.deb
 
     - name: build and run unit tests
-      run: clean all test
+      run: make clean all test
 
     - name: Run checkmake on Makefile
       run: ./checkmake Makefile
