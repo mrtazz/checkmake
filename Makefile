@@ -9,7 +9,7 @@ export GOFLAGS = -mod=vendor
 NAME := checkmake
 DESC := experimental linter for Makefiles
 PREFIX ?= usr/local
-VERSION := $(shell git describe --tags --always --dirty)
+VERSION ?= $(shell git describe --tags --always --dirty)
 GOVERSION := $(shell go version)
 BUILDTIME := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 BUILDDATE := $(shell date -u +"%B %d, %Y")
