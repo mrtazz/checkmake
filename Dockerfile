@@ -1,6 +1,7 @@
 FROM golang:1.13 as builder
 
-ARG BUILDER_NAME BUILDER_EMAIL
+ARG BUILDER_NAME
+ARG BUILDER_EMAIL
 
 COPY . /go/src/github.com/mrtazz/checkmake
 
