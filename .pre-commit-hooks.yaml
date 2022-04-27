@@ -2,4 +2,8 @@
     name: Makefile linter/analyzer
     entry: checkmake
     language: golang
-    files: Makefile
+    files: |
+        (?x)^(
+            (GNU)?[Mm]akefile|
+            .*\.mk
+        )$
