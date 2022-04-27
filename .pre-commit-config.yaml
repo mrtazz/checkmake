@@ -1,5 +1,5 @@
 repos:
--   repo: https://github.com/mrtazz/checkmake.git
+-   repo: https://github.com/trinitronx/checkmake.git
     rev: 0.2.2
     hooks:
     -   id: checkmake
