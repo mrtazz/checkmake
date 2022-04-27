@@ -1,0 +1,5 @@
+-   id: checkmake
+    name: Makefile linter/analyzer
+    entry: checkmake
+    language: golang
+    files: Makefile
