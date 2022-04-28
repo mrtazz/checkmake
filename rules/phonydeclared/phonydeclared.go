@@ -48,6 +48,7 @@ func (r *Phonydeclared) Run(makefile parser.Makefile, config rules.RuleConfig) r
 			ret = append(ret, rules.RuleViolation{
 				Rule:       "phonydeclared",
 				Violation:  fmt.Sprintf("Target %q should be declared PHONY.", rule.Target),
+				FileName:   makefile.FileName,
 				LineNumber: rule.LineNumber,
 			})
 		}

@@ -11,6 +11,7 @@ import (
 func TestAllTargetsArePhony(t *testing.T) {
 
 	makefile := parser.Makefile{
+		FileName:  "phony-declared-all-phony.mk",
 		Variables: []parser.Variable{parser.Variable{
 			Name:       "PHONY",
 			Assignment: "all clean"}},
@@ -29,6 +30,7 @@ func TestAllTargetsArePhony(t *testing.T) {
 func TestMissingOnePhonyTarget(t *testing.T) {
 
 	makefile := parser.Makefile{
+		FileName:  "phony-declared-missing-one-phony.mk",
 		Variables: []parser.Variable{parser.Variable{
 			Name:       "PHONY",
 			Assignment: "all"}},
@@ -42,4 +44,7 @@ func TestMissingOnePhonyTarget(t *testing.T) {
 
 	assert.Equal(t, len(ret), 1)
 
+	for i := range ret {
+		assert.Equal(t, "phony-declared-missing-one-phony.mk", ret[i].FileName)
+	}
 }
