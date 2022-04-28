@@ -6,5 +6,6 @@
     files: |
         (?x)^(
             (GNU)?[Mm]akefile|
-            .*\.mk
+            .*\.mk|
+            .*\.make
         )$
