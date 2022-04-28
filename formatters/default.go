@@ -26,12 +26,13 @@ func (f *DefaultFormatter) Format(violations rules.RuleViolationList) {
 	for idx, val := range violations {
 		data[idx] = []string{val.Rule,
 			val.Violation,
+			val.FileName,
 			strconv.Itoa(val.LineNumber)}
 	}
 
 	table := tablewriter.NewWriter(f.out)
 
-	table.SetHeader([]string{"Rule", "Description", "Line Number"})
+	table.SetHeader([]string{"Rule", "Description", "File Name", "Line Number"})
 
 	table.SetCenterSeparator(" ")
 	table.SetColumnSeparator(" ")
