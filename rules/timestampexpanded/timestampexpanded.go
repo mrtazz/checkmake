@@ -46,6 +46,7 @@ func (r *Timestampexpanded) Run(makefile parser.Makefile, config rules.RuleConfi
 			ret = append(ret, rules.RuleViolation{
 				Rule:       "timestampexpanded",
 				Violation:  fmt.Sprintf(vT, variable.Name),
+				FileName:   makefile.FileName,
 				LineNumber: variable.LineNumber,
 			})
 		}
