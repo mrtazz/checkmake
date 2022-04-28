@@ -11,6 +11,7 @@ func TestParseSimpleMakefile(t *testing.T) {
 	ret, err := Parse("../fixtures/simple.make")
 
 	assert.Equal(t, err, nil)
+	assert.Equal(t, ret.FileName, "../fixtures/simple.make")
 	assert.Equal(t, len(ret.Rules), 5)
 	assert.Equal(t, len(ret.Variables), 4)
 	assert.Equal(t, ret.Rules[0].Target, "clean")

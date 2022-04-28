@@ -15,6 +15,7 @@ import (
 
 // Makefile provides a data structure to describe a parsed Makefile
 type Makefile struct {
+	FileName  string
 	Rules     RuleList
 	Variables VariableList
 }
@@ -56,6 +57,7 @@ var (
 // know how to deal with individual lines.
 func Parse(filepath string) (ret Makefile, err error) {
 
+	ret.FileName = filepath
 	var scanner *MakefileScanner
 	scanner, err = NewMakefileScanner(filepath)
 	if err != nil {
