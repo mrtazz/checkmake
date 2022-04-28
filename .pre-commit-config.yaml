@@ -3,3 +3,7 @@ repos:
     rev: 0.2.2
     hooks:
     - id: checkmake
+      exclude: |
+        (?x)^(
+          fixtures/missing_phony\.make
+        )$
