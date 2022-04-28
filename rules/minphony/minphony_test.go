@@ -14,6 +14,7 @@ var mpRunTests = []struct {
 }{
 	{
 		mf: parser.Makefile{
+			FileName: "green-eggs.mk",
 			Rules: parser.RuleList{
 				{Target: "green-eggs"},
 				{Target: "ham"},
@@ -26,22 +27,26 @@ var mpRunTests = []struct {
 			rules.RuleViolation{
 				Rule:       "minphony",
 				Violation:  "Missing required phony target \"kleen\"",
+				FileName: "green-eggs.mk",
 				LineNumber: -1,
 			},
 			rules.RuleViolation{
 				Rule:       "minphony",
 				Violation:  "Missing required phony target \"awl\"",
+				FileName: "green-eggs.mk",
 				LineNumber: -1,
 			},
 			rules.RuleViolation{
 				Rule:       "minphony",
 				Violation:  "Missing required phony target \"toast\"",
+				FileName: "green-eggs.mk",
 				LineNumber: -1,
 			},
 		},
 	},
 	{
 		mf: parser.Makefile{
+			FileName: "kleen.mk",
 			Rules: parser.RuleList{
 				{Target: "awl"},
 				{Target: "distkleen"},
@@ -55,6 +60,7 @@ var mpRunTests = []struct {
 			rules.RuleViolation{
 				Rule:       "minphony",
 				Violation:  "Missing required phony target \"toast\"",
+				FileName:   "kleen.mk",
 				LineNumber: -1,
 			},
 		},
