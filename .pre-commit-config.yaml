@@ -1,3 +1,7 @@
+exclude: |
+    (?x)^(
+        vendor/.*
+    )$
 repos:
 -   repo: https://github.com/mrtazz/checkmake.git
     rev: 0.2.2
@@ -5,5 +9,6 @@ repos:
     - id: checkmake
       exclude: |
         (?x)^(
+          vendor/.*|
           fixtures/missing_phony\.make
         )$
