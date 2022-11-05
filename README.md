@@ -77,7 +77,7 @@ make
 
 checkmake is [natively embedded](https://oxsecurity.github.io/megalinter/latest/descriptors/makefile_checkmake/) within [MegaLinter](https://github.com/oxsecurity/megalinter)
 
-The install it, run `npx mega-linter-runner --install` (requires Node.js)
+To install it, run `npx mega-linter-runner --install` (requires Node.js)
 
 ## Inspiration
 This is totally inspired by an idea by [Dan
