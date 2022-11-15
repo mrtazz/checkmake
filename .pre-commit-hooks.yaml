@@ -1,0 +1,11 @@
+-   id: checkmake
+    name: Makefile linter/analyzer
+    entry: checkmake
+    language: golang
+    pass_filenames: true
+    files: |
+        (?x)^(
+            (GNU)?[Mm]akefile|
+            .*\.mk|
+            .*\.make
+        )$

@@ -56,6 +56,68 @@ Then run it with your Makefile attached, below is an example of it assuming the 
 docker run -v "$PWD"/Makefile:/Makefile checker
 ```
 
+## `pre-commit` usage
+
+This repo includes a `pre-commit` hook, which you may choose to use in your own
+repos. Simply add a `.pre-commit-config.yaml` to your repo's top-level directory
+
+```yaml
+repos:
+-   repo: https://github.com/mrtazz/checkmake.git
+    rev: 0.2.2
+    hooks:
+    -   id: checkmake
+```
+
+Then, run `pre-commit` as usual. For example:
+
+```sh
+pre-commit run --all-files
+```
+
+You may also choose to run this as a GitHub Actions workflow. To do this, add a
+`.github/workflows/pre-commit.yml` workflow to your repo:
+
+```yaml
+name: pre-commit
+
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+    paths:
+      - '.pre-commit-config.yaml'
+      - '.pre-commit-hooks.yaml'
+      - 'Makefile'
+      - 'makefile'
+      - 'GNUmakefile'
+      - '**.mk'
+      - '**.make'
+  push:
+    paths:
+      - '.pre-commit-config.yaml'
+      - '.pre-commit-hooks.yaml'
+      - 'Makefile'
+      - 'makefile'
+      - 'GNUmakefile'
+      - '**.mk'
+      - '**.make'
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v3
+    - name: Set up Go 1.17
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+      id: go
+    - uses: pre-commit/action@v2.0.3
+```
+
 ## Installation
 
 ### Requirements
