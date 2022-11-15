@@ -71,6 +71,14 @@ cd checkmake
 make
 ```
 
+## Use in CI
+
+### MegaLinter
+
+checkmake is [natively embedded](https://oxsecurity.github.io/megalinter/latest/descriptors/makefile_checkmake/) within [MegaLinter](https://github.com/oxsecurity/megalinter)
+
+To install it, run `npx mega-linter-runner --install` (requires Node.js)
+
 ## Inspiration
 This is totally inspired by an idea by [Dan
 Buch](https://twitter.com/meatballhat/status/768112351924985856).
