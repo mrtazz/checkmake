@@ -59,6 +59,21 @@ docker run -v "$PWD"/Makefile:/Makefile checker
 ### Requirements
 The [pandoc](https://pandoc.org/) document converter utility is required to run checkmate. You can find out if you have it via `which pandoc`. [Install pandoc](https://pandoc.org/installing.html) if the command was not found.
 
+## With Go
+
+With `go` 1.16 or higher:
+
+```sh
+go install github.com/mrtazz/checkmake/cmd/checkmake@latest
+checkmake Makefile
+```
+
+Or alternatively, run it directly:
+
+```sh
+go run github.com/mrtazz/checkmake/cmd/checkmake@latest Makefile
+```
+
 ### Packages
 There are packages for linux up [on packagecloud.io](https://packagecloud.io/mrtazz/checkmake) or build it yourself with the steps below.
 
