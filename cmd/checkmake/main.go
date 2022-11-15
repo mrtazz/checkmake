@@ -20,7 +20,7 @@ var (
 	usage = `checkmake.
 
   Usage:
-  checkmake [options] <makefile>
+  checkmake [options] <makefile>...
   checkmake -h | --help
   checkmake --version
   checkmake --list-rules
@@ -72,13 +72,6 @@ func parseArgsAndGetFormatter(args map[string]interface{}) (formatters.Formatter
 		os.Exit(0)
 	}
 
-	makefile, parseError := parser.Parse(args["<makefile>"].(string))
-
-	if parseError != nil {
-		log.Fatal(parseError)
-		os.Exit(1)
-	}
-
 	if args["--config"] != nil {
 		configPath = args["--config"].(string)
 	}
@@ -90,7 +83,20 @@ func parseArgsAndGetFormatter(args map[string]interface{}) (formatters.Formatter
 			configPath))
 	}
 
-	violations := validator.Validate(makefile, cfg)
+	var violations rules.RuleViolationList
+	makefileArray := args["<makefile>"].([]string)
+	logger.Debug(fmt.Sprintf("Makefiles passed: %q",
+		makefileArray))
+	for _, mkf := range makefileArray {
+		logger.Info(fmt.Sprintf("Parsing file %q",
+			mkf))
+		makefile, parseError := parser.Parse(mkf)
+		if parseError != nil {
+			log.Fatal(parseError)
+			os.Exit(1)
+		}
+		violations = append(violations, validator.Validate(makefile, cfg)...)
+	}
 
 	var formatter formatters.Formatter
 

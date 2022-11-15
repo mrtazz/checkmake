@@ -9,11 +9,11 @@ date: REPLACE_DATE
 
 # SYNOPSIS
 
-**checkmake** \[options\] makefile
+**checkmake** \[options\] makefile ...
 
 # DESCRIPTION
 `checkmake` is an experimental linter for Makefiles. It allows for a set of
-configurable rules being run against a Makefile.
+configurable rules being run against a Makefile or a set of `\*.mk` files.
 
 # OPTIONS
 

@@ -14,20 +14,20 @@ import (
 func TestCustomFormatter(t *testing.T) {
 	out := new(bytes.Buffer)
 
-	tmpl, _ := template.New("test").Parse("{{.LineNumber}}:{{.Rule}}:{{.Violation}}")
+	tmpl, _ := template.New("test").Parse("{{.FileName}}:{{.LineNumber}}:{{.Rule}}:{{.Violation}}")
 	formatter := CustomFormatter{template: tmpl, out: out}
 
 	makefile, _ := parser.Parse("../fixtures/missing_phony.make")
 
 	violations := validator.Validate(makefile, &config.Config{})
 	formatter.Format(violations)
-	assert.Regexp(t, `21:minphony:Missing required phony target "all"`, out.String())
-	assert.Regexp(t, `21:minphony:Missing required phony target "test"`, out.String())
-	assert.Regexp(t, `16:phonydeclared:Target "all" should be declared PHONY.`, out.String())
+	assert.Regexp(t, `../fixtures/missing_phony.make:21:minphony:Missing required phony target "all"`, out.String())
+	assert.Regexp(t, `../fixtures/missing_phony.make:21:minphony:Missing required phony target "test"`, out.String())
+	assert.Regexp(t, `../fixtures/missing_phony.make:16:phonydeclared:Target "all" should be declared PHONY.`, out.String())
 }
 
 func TestCustomFormatterNewMethod(t *testing.T) {
-	_, err := NewCustomFormatter("{{.LineNumber}}:{{.Rule}}:{{.Violation}}")
+	_, err := NewCustomFormatter("{{.FileName}}:{{.LineNumber}}:{{.Rule}}:{{.Violation}}")
 
 	assert.Equal(t, nil, err)
 }

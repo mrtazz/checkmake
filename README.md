@@ -15,11 +15,13 @@ not do what you want it to.
 ```
 % checkmake Makefile
 
+% checkmake Makefile foo.mk bar.mk baz.mk
+
 % checkmake --help
 checkmake.
 
 Usage:
-checkmake [--debug|--config=<configPath>] <makefile>
+checkmake [--debug|--config=<configPath>] <makefile>...
 checkmake -h | --help
 checkmake --version
 

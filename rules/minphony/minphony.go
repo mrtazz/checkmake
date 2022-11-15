@@ -58,6 +58,7 @@ func (r *MinPhony) Run(makefile parser.Makefile, _ rules.RuleConfig) rules.RuleV
 			ret = append(ret, rules.RuleViolation{
 				Rule:       "minphony",
 				Violation:  fmt.Sprintf("Missing required phony target %q", reqRule),
+				FileName:   makefile.FileName,
 				LineNumber: ruleLineNumber,
 			})
 		}

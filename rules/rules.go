@@ -16,6 +16,7 @@ type Rule interface {
 type RuleViolation struct {
 	Rule       string
 	Violation  string
+	FileName   string
 	LineNumber int
 }
 

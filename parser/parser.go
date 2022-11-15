@@ -15,6 +15,7 @@ import (
 
 // Makefile provides a data structure to describe a parsed Makefile
 type Makefile struct {
+	FileName  string
 	Rules     RuleList
 	Variables VariableList
 }
@@ -24,6 +25,7 @@ type Rule struct {
 	Target       string
 	Dependencies []string
 	Body         []string
+	FileName     string
 	LineNumber   int
 }
 
@@ -36,6 +38,7 @@ type Variable struct {
 	SimplyExpanded  bool
 	Assignment      string
 	SpecialVariable bool
+	FileName        string
 	LineNumber      int
 }
 
@@ -56,6 +59,7 @@ var (
 // know how to deal with individual lines.
 func Parse(filepath string) (ret Makefile, err error) {
 
+	ret.FileName = filepath
 	var scanner *MakefileScanner
 	scanner, err = NewMakefileScanner(filepath)
 	if err != nil {
@@ -73,6 +77,7 @@ func Parse(filepath string) (ret Makefile, err error) {
 					Name:            strings.TrimSpace(matches[1]),
 					Assignment:      strings.TrimSpace(matches[2]),
 					SpecialVariable: true,
+					FileName:        filepath,
 					LineNumber:      scanner.LineNumber}
 				ret.Variables = append(ret.Variables, specialVar)
 			}
@@ -147,12 +152,14 @@ func parseRuleOrVariable(scanner *MakefileScanner) (ret interface{}, err error) 
 			Target:       strings.TrimSpace(matches[1]),
 			Dependencies: filteredDeps,
 			Body:         ruleBody,
+			FileName:     scanner.FileHandle.Name(),
 			LineNumber:   beginLineNumber}
 	} else if matches := reFindSimpleVariable.FindStringSubmatch(line); matches != nil {
 		ret = Variable{
 			Name:           strings.TrimSpace(matches[1]),
 			Assignment:     strings.TrimSpace(matches[2]),
 			SimplyExpanded: true,
+			FileName:       scanner.FileHandle.Name(),
 			LineNumber:     scanner.LineNumber}
 		scanner.Scan()
 	} else if matches := reFindExpandedVariable.FindStringSubmatch(line); matches != nil {
@@ -160,6 +167,7 @@ func parseRuleOrVariable(scanner *MakefileScanner) (ret interface{}, err error) 
 			Name:           strings.TrimSpace(matches[1]),
 			Assignment:     strings.TrimSpace(matches[2]),
 			SimplyExpanded: false,
+			FileName:       scanner.FileHandle.Name(),
 			LineNumber:     scanner.LineNumber}
 		scanner.Scan()
 	} else {

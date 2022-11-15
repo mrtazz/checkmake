@@ -51,6 +51,7 @@ func (m *MaxBodyLength) Run(makefile parser.Makefile, config rules.RuleConfig) r
 			ret = append(ret, rules.RuleViolation{
 				Rule:       "maxbodylength",
 				Violation:  fmt.Sprintf(vT, rule.Target, maxBodyLength, len(rule.Body)),
+				FileName:   makefile.FileName,
 				LineNumber: rule.LineNumber,
 			})
 		}

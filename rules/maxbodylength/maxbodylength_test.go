@@ -11,6 +11,7 @@ import (
 func TestFooIsTooLong(t *testing.T) {
 
 	makefile := parser.Makefile{
+		FileName: "maxbodylength.mk",
 		Rules: []parser.Rule{parser.Rule{
 			Target: "foo",
 			Body: []string{"echo 'foo'",
@@ -32,11 +33,13 @@ func TestFooIsTooLong(t *testing.T) {
 		rule.Description())
 	assert.Equal(t, "Target body for \"foo\" exceeds allowed length of 5 (7).", ret[0].Violation)
 	assert.Equal(t, 1, ret[0].LineNumber)
+	assert.Equal(t, "maxbodylength.mk", ret[0].FileName)
 }
 
 func TestFooIsTooLongWithConfig(t *testing.T) {
 
 	makefile := parser.Makefile{
+		FileName: "maxbodylength.mk",
 		Rules: []parser.Rule{parser.Rule{
 			Target: "foo",
 			Body: []string{"echo 'foo'",
@@ -58,4 +61,5 @@ func TestFooIsTooLongWithConfig(t *testing.T) {
 		rule.Description())
 	assert.Equal(t, "Target body for \"foo\" exceeds allowed length of 3 (4).", ret[0].Violation)
 	assert.Equal(t, 1, ret[0].LineNumber)
+	assert.Equal(t, "maxbodylength.mk", ret[0].FileName)
 }
