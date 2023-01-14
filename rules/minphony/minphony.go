@@ -12,9 +12,6 @@ import (
 
 var (
 	defaultRequired = []string{
-		"all",
-		"clean",
-		"test",
 	}
 )
 
