@@ -64,16 +64,35 @@ repos. Simply add a `.pre-commit-config.yaml` to your repo's top-level directory
 ```yaml
 repos:
 -   repo: https://github.com/mrtazz/checkmake.git
+    # Or another commit hash or version
     rev: 0.2.2
     hooks:
+    # Use this hook to let pre-commit build checkmake in its sandbox
     -   id: checkmake
+    # OR Use this hook to use a pre-installed checkmark executable
+    # -   id: checkmake-system
 ```
 
-Then, run `pre-commit` as usual. For example:
+There are two hooks available:
+
+- `checkmake` (Recommended)
+
+   pre-commit will set up a Go environment from scratch to compile and run checkmake.
+   See the [pre-commit `golang` plugin docs](https://pre-commit.com/#golang) for more information.
+
+- `checkmake-system`
+
+   pre-commit will look for `checkmake` on your `PATH`.
+   This hook requires you to install `checkmake` separately, e.g. with your package manager or [a prebuilt binary release](https://github.com/mrtazz/checkmake/releases).
+   Only recommended if it's permissible to require all repository users install `checkmake` manually.
+
+Then, run `pre-commit` as usual as a part of `git commit` or explicitly, for example:
 
 ```sh
 pre-commit run --all-files
 ```
+
+### pre-commit in GitHub Actions
 
 You may also choose to run this as a GitHub Actions workflow. To do this, add a
 `.github/workflows/pre-commit.yml` workflow to your repo:

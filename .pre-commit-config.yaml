@@ -4,7 +4,7 @@ exclude: |
     )$
 repos:
 -   repo: https://github.com/mrtazz/checkmake.git
-    rev: 0.2.2
+    rev: main
     hooks:
     - id: checkmake
       exclude: |

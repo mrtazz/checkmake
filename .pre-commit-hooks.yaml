@@ -4,3 +4,9 @@
     language: golang
     pass_filenames: true
     types: [makefile]
+-   id: checkmake-system
+    name: Makefile linter/analyzer
+    entry: checkmake
+    language: system
+    types: [makefile]
+    pass_filenames: true
