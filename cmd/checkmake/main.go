@@ -20,7 +20,7 @@ var (
 	usage = `checkmake.
 
   Usage:
-  checkmake [options] <makefile>...
+  checkmake [options] [<makefile>...]
   checkmake -h | --help
   checkmake --version
   checkmake --list-rules
