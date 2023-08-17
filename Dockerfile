@@ -2,12 +2,14 @@ FROM golang:1.13 as builder
 
 ARG BUILDER_NAME BUILDER_EMAIL
 
+ENV GOOS=linux GOARCH=amd64 CGO_ENABLED=0
 COPY . /go/src/github.com/mrtazz/checkmake
 
-RUN cd /go/src/github.com/mrtazz/checkmake && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 make binaries
-RUN cd /go/src/github.com/mrtazz/checkmake && make test
+WORKDIR /go/src/github.com/mrtazz/checkmake
+RUN make binaries
+RUN make test
 
-FROM alpine:3.9
+FROM alpine:3.11
 RUN apk add make
 USER nobody
 
