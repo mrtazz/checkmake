@@ -36,12 +36,14 @@ configurable rules being run against a Makefile or a set of `\*.mk` files.
 :    List registered rules
 
 # CONFIGURATION
-By default checkmake looks for a `checkmake.ini` file in the same folder it's
-executed in. This can be overridden by passing the `--config=` argument
-pointing it to a different configuration file. With the configuration file
-the `[default]` section is for checkmake itself while sections named after the
-rule names are passed to the rules as their configuration. All keys/values are
-hereby treated as strings and passed to the rule in a string/string map.
+By default checkmake looks for a `checkmake.ini` file in the same
+folder it's executed in, and then as fallback in `~/checkmake.ini`.
+This can be overridden by passing the `--config=` argument pointing it
+to a different configuration file. With the configuration file the
+`[default]` section is for checkmake itself while sections named after
+the rule names are passed to the rules as their configuration. All
+keys/values are hereby treated as strings and passed to the rule in a
+string/string map.
 
 The following configuration options for checkmake itself are supported within
 the `default` section:
