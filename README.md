@@ -140,7 +140,7 @@ jobs:
 ## Installation
 
 ### Requirements
-The [pandoc](https://pandoc.org/) document converter utility is required to run checkmate. You can find out if you have it via `which pandoc`. [Install pandoc](https://pandoc.org/installing.html) if the command was not found.
+The [pandoc](https://pandoc.org/) document converter utility is required to run checkmake. You can find out if you have it via `which pandoc`. [Install pandoc](https://pandoc.org/installing.html) if the command was not found.
 
 ## With Go
 
