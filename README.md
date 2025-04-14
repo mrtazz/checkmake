@@ -179,4 +179,4 @@ To install it, run `npx mega-linter-runner --install` (requires Node.js)
 
 ## Inspiration
 This is totally inspired by an idea by [Dan
-Buch](https://twitter.com/meatballhat/status/768112351924985856).
+Buch](https://web.archive.org/web/20200916193234/https://twitter.com/meatballhat/status/768112351924985856).
