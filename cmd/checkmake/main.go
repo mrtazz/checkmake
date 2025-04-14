@@ -74,6 +74,12 @@ func parseArgsAndGetFormatter(args map[string]interface{}) (formatters.Formatter
 
 	if args["--config"] != nil {
 		configPath = args["--config"].(string)
+	} else {
+		_, err := os.Stat(configPath);
+		if os.IsNotExist(err) {
+			home := os.Getenv("HOME")
+			configPath = home + "/checkmake.ini"
+		}
 	}
 
 	cfg, cfgError := config.NewConfigFromFile(configPath)
