@@ -11,7 +11,7 @@ RUN make binaries
 RUN make test
 
 FROM alpine:3.11
-RUN apk add make
+RUN apk add --no-cache make
 USER nobody
 
 COPY --from=builder /go/src/github.com/mrtazz/checkmake/checkmake /
