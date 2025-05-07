@@ -23,7 +23,7 @@ type MaxBodyLength struct {
 }
 
 var (
-	vT = "Target body for %q exceeds allowed length of %d (%d)."
+	vT = "Target body for %q exceeds allowed length of %d lines (%d)."
 )
 
 // Name returns the name of the rule

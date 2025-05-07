@@ -31,7 +31,7 @@ func TestFooIsTooLong(t *testing.T) {
 	assert.Equal(t, 1, len(ret))
 	assert.Equal(t, "Target bodies should be kept simple and short.",
 		rule.Description())
-	assert.Equal(t, "Target body for \"foo\" exceeds allowed length of 5 (7).", ret[0].Violation)
+	assert.Equal(t, "Target body for \"foo\" exceeds allowed length of 5 lines (7).", ret[0].Violation)
 	assert.Equal(t, 1, ret[0].LineNumber)
 	assert.Equal(t, "maxbodylength.mk", ret[0].FileName)
 }
@@ -59,7 +59,7 @@ func TestFooIsTooLongWithConfig(t *testing.T) {
 	assert.Equal(t, 1, len(ret))
 	assert.Equal(t, "Target bodies should be kept simple and short.",
 		rule.Description())
-	assert.Equal(t, "Target body for \"foo\" exceeds allowed length of 3 (4).", ret[0].Violation)
+	assert.Equal(t, "Target body for \"foo\" exceeds allowed length of 3 lines (4).", ret[0].Violation)
 	assert.Equal(t, 1, ret[0].LineNumber)
 	assert.Equal(t, "maxbodylength.mk", ret[0].FileName)
 }
