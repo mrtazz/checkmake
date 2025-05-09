@@ -33,7 +33,7 @@ func (m *MaxBodyLength) Name() string {
 
 // Description returns the description of the rule
 func (m *MaxBodyLength) Description() string {
-	return "Target bodies should be kept simple and short."
+	return fmt.Sprintf("Target bodies should be kept simple and short (no more than %d lines).", maxBodyLength)
 }
 
 // Run executes the rule logic
