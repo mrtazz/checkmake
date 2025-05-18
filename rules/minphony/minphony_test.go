@@ -1,6 +1,8 @@
 package minphony
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/mrtazz/checkmake/parser"
@@ -72,7 +74,9 @@ func TestMinPhony_new(t *testing.T) {
 
 	assert.Equal(t, []string{"oh", "hai"}, mp.required)
 	assert.Equal(t, "minphony", mp.Name())
-	assert.Equal(t, "Minimum required phony targets must be present", mp.Description())
+	expected_desc := fmt.Sprintf("Minimum required phony targets must be present (%s)", strings.Join(mp.required, ","))
+
+	assert.Equal(t, expected_desc, mp.Description())
 }
 
 func TestMinPhony_Run(t *testing.T) {

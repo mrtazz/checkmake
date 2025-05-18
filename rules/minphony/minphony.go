@@ -34,7 +34,7 @@ func (r *MinPhony) Name() string {
 
 // Description returns the description of the rule
 func (r *MinPhony) Description() string {
-	return "Minimum required phony targets must be present"
+	return fmt.Sprintf("Minimum required phony targets must be present (%s)", strings.Join(r.required, ","))
 }
 
 // Run executes the rule logic
