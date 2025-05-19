@@ -86,3 +86,35 @@ func TestMinPhony_Run(t *testing.T) {
 		assert.Equal(t, test.vl, mp.Run(test.mf, rules.RuleConfig{}))
 	}
 }
+func TestMinPhony_RunWithConfig(t *testing.T) {
+	mp := &MinPhony{required: []string{}}
+
+	mf := parser.Makefile{
+		FileName: "test.mk",
+		Rules: parser.RuleList{
+			{Target: "clone"},
+			{Target: "toast"},
+		},
+		Variables: parser.VariableList{
+			{Name: "PHONY", Assignment: "clone toast"},
+		},
+	}
+	vl := rules.RuleViolationList{
+		rules.RuleViolation{
+			Rule:       "minphony",
+			Violation:  "Missing required phony target \"foo\"",
+			FileName:   "test.mk",
+			LineNumber: -1,
+		},
+		rules.RuleViolation{
+			Rule:       "minphony",
+			Violation:  "Missing required phony target \"bar\"",
+			FileName:   "test.mk",
+			LineNumber: -1,
+		},
+	}
+	cfg := rules.RuleConfig{}
+	cfg["required"] = "foo, bar"
+
+	assert.Equal(t, vl, mp.Run(mf, cfg))
+}
