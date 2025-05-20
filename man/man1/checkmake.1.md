@@ -52,6 +52,16 @@ the `default` section:
 :    This enables the custom output formatter with the given template string
 as a format
 
+maxBodylength.maxBodylength
+    This allows to override the maximum number of lines for a rule body
+    that checkmake will allow from the default of 5  to a different number
+
+minphony.required
+    This allows to override the list of minimum required phony targets
+    from the default of (all, test, clean) to any list of target name strings.
+    The value is a comma-separated list of strings.
+
+
 
 # EXIT STATUS
 checkmake exits with the following status:
