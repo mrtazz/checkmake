@@ -38,9 +38,16 @@ func (r *MinPhony) Description() string {
 }
 
 // Run executes the rule logic
-func (r *MinPhony) Run(makefile parser.Makefile, _ rules.RuleConfig) rules.RuleViolationList {
+func (r *MinPhony) Run(makefile parser.Makefile, config rules.RuleConfig) rules.RuleViolationList {
 	ret := rules.RuleViolationList{}
 
+	if confRequired, ok := config["required"]; ok {
+		r.required = strings.Split(confRequired, ",")
+		for i := range r.required {
+			r.required[i] = strings.TrimSpace(r.required[i])
+		}
+
+	}
 	ruleIndex := make(map[string]bool)
 	ruleLineNumber := 0
 	for _, variable := range makefile.Variables {
