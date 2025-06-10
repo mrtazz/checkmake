@@ -60,6 +60,7 @@ minphony.required
     This allows to override the list of minimum required phony targets
     from the default of (all, test, clean) to any list of target name strings.
     The value is a comma-separated list of strings.
+    Setting minphony.required to the empty string disabled the minphony rule altogether.
 
 
 
