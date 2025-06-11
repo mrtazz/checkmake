@@ -117,4 +117,9 @@ func TestMinPhony_RunWithConfig(t *testing.T) {
 	cfg["required"] = "foo, bar"
 
 	assert.Equal(t, vl, mp.Run(mf, cfg))
+
+	cfg["required"] = ""
+	vl = rules.RuleViolationList{}
+
+	assert.Equal(t, vl, mp.Run(mf, cfg))
 }

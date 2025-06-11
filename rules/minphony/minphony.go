@@ -42,7 +42,14 @@ func (r *MinPhony) Run(makefile parser.Makefile, config rules.RuleConfig) rules.
 	ret := rules.RuleViolationList{}
 
 	if confRequired, ok := config["required"]; ok {
-		r.required = strings.Split(confRequired, ",")
+		// special case:
+		// empty string means disable the rule.
+		if confRequired == "" {
+			r.required = []string{}
+		} else {
+
+			r.required = strings.Split(confRequired, ",")
+		}
 		for i := range r.required {
 			r.required[i] = strings.TrimSpace(r.required[i])
 		}
